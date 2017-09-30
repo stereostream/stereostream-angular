@@ -4,10 +4,12 @@ import { RouterModule } from '@angular/router';
 
 import { DashboardComponent } from './dashboard.component';
 import { dashboardRoutes } from './dashboard.routes';
+import { WebrtcModule } from '../webrtc/webrtc.module';
 
 @NgModule({
   imports: [
-    CommonModule, RouterModule, RouterModule.forChild(dashboardRoutes)
+    CommonModule, RouterModule, RouterModule.forChild(dashboardRoutes),
+    WebrtcModule
   ],
   declarations: [DashboardComponent]
 })

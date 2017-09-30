@@ -13,6 +13,7 @@ import {
   MdMenuModule,
   MdProgressBarModule,
   MdSidenavModule,
+  MdSelectModule,
   MdSnackBarModule,
   MdToolbarModule
 } from '@angular/material';
@@ -21,16 +22,16 @@ import {
   imports: [
     MdCommonModule,
     MdAutocompleteModule, MdButtonModule, MdCardModule, MdCheckboxModule,
-    MdCommonModule, MdDialogModule, MdFormFieldModule, MdGridListModule,
-    MdIconModule, MdInputModule, MdMenuModule, MdProgressBarModule,
-    MdSidenavModule, MdSnackBarModule, MdToolbarModule
+    MdDialogModule, MdFormFieldModule, MdGridListModule, MdIconModule,
+    MdInputModule, MdMenuModule, MdProgressBarModule, MdSidenavModule,
+    MdSelectModule, MdSnackBarModule, MdToolbarModule
   ],
   exports: [
     MdCommonModule,
     MdAutocompleteModule, MdButtonModule, MdCardModule, MdCheckboxModule,
-    MdCommonModule, MdDialogModule, MdFormFieldModule, MdGridListModule,
-    MdIconModule, MdInputModule, MdMenuModule, MdProgressBarModule,
-    MdSidenavModule, MdSnackBarModule, MdToolbarModule
+    MdDialogModule, MdFormFieldModule, MdGridListModule, MdIconModule,
+    MdInputModule, MdMenuModule, MdProgressBarModule, MdSidenavModule,
+    MdSelectModule, MdSnackBarModule, MdToolbarModule
   ]
 })
 export class MaterialImportModule {

@@ -1,0 +1,26 @@
+<h1>MediaStreamTrack.getSources</h1>
+
+<form>
+  <md-select
+    placeholder="mediaDeviceInfo"
+    [(ngModel)]="selectedValue"
+    name="mediaDeviceInfo">
+    <md-option *ngFor="let av of mediaDeviceInfos" [value]="av.groupId">
+      {{av.groupId}}
+    </md-option>
+  </md-select>
+
+  <p> Selected value: {{selectedValue}} </p>
+</form>
+
+<div class="select">
+  <label for="audioSource">Audio source: </label>
+  <select id="audioSource" #audioSource></select>
+</div>
+
+<div class="select">
+  <label for="videoSource">Video source: </label>
+  <select id="videoSource" #videoSource></select>
+</div>
+
+<video muted autoplay></video>
