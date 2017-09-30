@@ -1,26 +1,23 @@
-<h1>MediaStreamTrack.getSources</h1>
-
-<form>
+<form (ngSubmit)="getStream()">
   <md-select
-    placeholder="mediaDeviceInfo"
-    [(ngModel)]="selectedValue"
-    name="mediaDeviceInfo">
-    <md-option *ngFor="let av of mediaDeviceInfos" [value]="av.groupId">
-      {{av.groupId}}
+    placeholder="microphone"
+    [(ngModel)]="selectedMic"
+    name="micSelector">
+    <md-option *ngFor="let mic of mics" [value]="mic.deviceId">
+      {{deviceId2Label[mic.deviceId]}}
     </md-option>
   </md-select>
 
-  <p> Selected value: {{selectedValue}} </p>
+  <md-select
+    placeholder="camera"
+    [(ngModel)]="selectedCam"
+    name="camSelector">
+    <md-option *ngFor="let cam of cams" [value]="cam.deviceId">
+      {{deviceId2Label[cam.deviceId]}}
+    </md-option>
+  </md-select>
+
+  <button md-raised-button color="primary" type="submit">Use</button>
 </form>
 
-<div class="select">
-  <label for="audioSource">Audio source: </label>
-  <select id="audioSource" #audioSource></select>
-</div>
-
-<div class="select">
-  <label for="videoSource">Video source: </label>
-  <select id="videoSource" #videoSource></select>
-</div>
-
-<video muted autoplay></video>
+<video muted autoplay #video id="video"></video>
