@@ -1,5 +1,18 @@
-<h2>Camera 0</h2>
-<app-webrtc></app-webrtc>
-
-<h2>Camera 1</h2>
-<app-webrtc></app-webrtc>
+<md-card class="card-demo">
+  <md-card-title>Add cameras</md-card-title>
+  <md-card-subtitle>Videos have been scaled 75% on this page</md-card-subtitle>
+  <md-card-content>
+    <div class="containerX">
+      <div fxLayout="row" class="coloredContainerX box">
+        <div fxFlex.gt-sm="50" fxFlex="50">
+          <h2>Camera 0</h2>
+          <app-webrtc></app-webrtc>
+        </div>
+        <div fxFlex.gt-sm="50" fxFlex="50">
+          <h2>Camera 1</h2>
+          <app-webrtc></app-webrtc>
+        </div>
+      </div>
+    </div>
+  </md-card-content>
+</md-card>

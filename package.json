@@ -1,6 +1,6 @@
 {
   "name": "stereostream-angular",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -17,6 +17,7 @@
     "@angular/common": "^4.4.3",
     "@angular/compiler": "^4.4.3",
     "@angular/core": "^4.4.3",
+    "@angular/flex-layout": "^2.0.0-beta.9",
     "@angular/forms": "^4.4.3",
     "@angular/http": "^4.4.3",
     "@angular/material": "^2.0.0-beta.11",

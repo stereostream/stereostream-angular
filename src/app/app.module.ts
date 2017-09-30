@@ -3,6 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppComponent } from './app.component';
 import { NavbarModule } from './navbar/navbar.module';
@@ -12,6 +13,8 @@ import { AuthGuard } from './auth/auth.guard';
 import { FooterModule } from './footer/footer.module';
 import { AlertsService } from './alerts/alerts.service';
 import { AuthService } from '../api/auth/auth.service';
+import { PlatformModule } from '@angular/cdk/platform';
+import { ObserversModule } from '@angular/cdk/observers';
 
 @NgModule({
   declarations: [
@@ -20,6 +23,8 @@ import { AuthService } from '../api/auth/auth.service';
   imports: [
     BrowserModule, BrowserAnimationsModule, HttpClientModule,
     RouterModule, RouterModule.forRoot(appRoutes),
+
+    FlexLayoutModule, ObserversModule, PlatformModule,
 
     MaterialImportModule,
     NavbarModule,

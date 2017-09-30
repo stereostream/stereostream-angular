@@ -4,7 +4,8 @@
     [(ngModel)]="selectedMic"
     name="micSelector">
     <md-option *ngFor="let mic of mics" [value]="mic.deviceId">
-      {{deviceId2Label[mic.deviceId]}}
+      <!--{deviceId2Label[mic.deviceId]}-->
+      {{mic.deviceId}}
     </md-option>
   </md-select>
 
@@ -20,4 +21,4 @@
   <button md-raised-button color="primary" type="submit">Use</button>
 </form>
 
-<video muted autoplay #video id="video"></video>
+<video muted autoplay *ngIf="videoSrcObject" [srcObject]="videoSrcObject"></video>

@@ -17,13 +17,14 @@ export class ServerStatusComponent implements OnInit {
               private alertsService: AlertsService) {}
 
   ngOnInit() {
-    this.serverStatus = {version: 'App 0.0.3; '};
+    this.serverStatus = { version: 'App 0.0.4; ' };
     this.serverStatusService
       .get()
       .subscribe(
         serverStatus => this.serverStatus.version += `API ${serverStatus.version}`,
         (error: HttpErrorResponse) => {
-          const msg = error.status === 504 ? 'API server not available' : error.statusText;
+          const msg = error.status === 504 || error.message === 'Bad Gateway' ?
+            'API server not available' : error.statusText;
           this.alertsService.add(msg);
           this.serverStatus.version += msg;
         }
