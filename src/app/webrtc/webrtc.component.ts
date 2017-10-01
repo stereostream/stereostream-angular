@@ -2,13 +2,19 @@ import { AfterViewInit, Component, Input } from '@angular/core';
 
 import { AlertsService } from '../alerts/alerts.service';
 
+declare const MediaRecorder: any;
+
 @Component({
   selector: 'app-webrtc',
   templateUrl: './webrtc.component.html',
   styleUrls: ['./webrtc.component.css']
 })
 export class WebrtcComponent implements AfterViewInit {
-  @Input() videoSrcObject: HTMLVideoElement['srcObject'];
+  @Input() webcamSrcObject: HTMLVideoElement['srcObject'];
+  @Input() previewSrcObject: HTMLVideoElement['srcObject'];
+  @Input() downloadHref: HTMLLinkElement['href'];
+  @Input() name: string;
+
   selectedCam: string;
   selectedMic: string;
   cams: MediaDeviceInfo[] = [];
@@ -16,7 +22,7 @@ export class WebrtcComponent implements AfterViewInit {
   mediaDeviceInfos: MediaDeviceInfo[] = [];
   deviceId2Label: {[index: string]: string} = {};
   deviceId2Device: {[index: string]: MediaDeviceInfo} = {};
-
+  recorder: any /* MediaRecorder */;
 
   constructor(private alertsService: AlertsService) { }
 
@@ -25,7 +31,6 @@ export class WebrtcComponent implements AfterViewInit {
       .enumerateDevices()
       .then(this.gotDevices.bind(this))
       .catch(this.alertsService.add.bind(this.alertsService));
-
   }
 
   gotDevices(deviceInfos: MediaDeviceInfo[]) {
@@ -71,7 +76,27 @@ export class WebrtcComponent implements AfterViewInit {
       .catch(this.alertsService.add.bind(this.alertsService));
   }
 
+  startRecord() {
+    this.recorder = new MediaRecorder(this.webcamSrcObject);
+    this.recorder.start();
+  }
+
+  stopRecord() {
+    this.recorder.ondataavailable = e => {
+      const ul = document.getElementById('ul');
+      ul.style.display = 'block';
+      const a = document.createElement('a'),
+        li = document.createElement('li');
+      a.download = `${Date.now() / 1000}.${this.name}.RecordedVideo.webm`;
+      a.href = URL.createObjectURL(e.data);
+      a.textContent = a.download;
+      li.appendChild(a);
+      ul.appendChild(li);
+    };
+    this.recorder.stop();
+  }
+
   gotStream(stream: HTMLVideoElement['srcObject']) {
-    this.videoSrcObject = stream;
+    this.webcamSrcObject = stream;
   }
 }

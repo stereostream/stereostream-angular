@@ -60,6 +60,31 @@ import 'zone.js/dist/zone'; // Included with Angular CLI.
  */
 // import 'intl/locale-data/jsonp/en';
 
+const promisifiedOldGUM = function(constraints, successCallback, errorCallback) {
+  // First get ahold of getUserMedia, if present
+  const getUserMedia = (navigator.getUserMedia ||
+    navigator['webkitGetUserMedia'] ||
+    navigator['mozGetUserMedia'] ||
+    navigator['msGetUserMedia']);
+
+  // Some browsers just don't implement it - return a rejected promise with an error
+  // to keep a consistent interface
+  if (!getUserMedia) {
+    return Promise.reject(new Error('getUserMedia is not implemented in this browser'));
+  }
+
+  // Otherwise, wrap the call to the old navigator.getUserMedia with a Promise
+  return new Promise(function(successCallbac, errorCallbac) {
+    getUserMedia.call(navigator, constraints, successCallbac, errorCallbac);
+  });
+};
+
+// Some browsers partially implement mediaDevices. We can't just assign an object
+// with getUserMedia as it would overwrite existing properties.
+// Here, we will just add the getUserMedia property if it's missing.
+if (navigator.mediaDevices.getUserMedia === undefined) {
+  navigator.mediaDevices.getUserMedia = promisifiedOldGUM as any;
+}
 
 if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices)
   alert('camera features not supported; use latest Firefox or latest Chrome');

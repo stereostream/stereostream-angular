@@ -18,7 +18,18 @@
     </md-option>
   </md-select>
 
-  <button md-raised-button color="primary" type="submit">Use</button>
+  <button md-raised-button color="primary" type="submit">
+    Use
+  </button>
+  <button md-raised-button id="record" *ngIf="webcamSrcObject"
+          (disabled)="recorder" (click)="startRecord()">
+    Record
+  </button>
+  <button md-raised-button id="stopRecording" *ngIf="recorder && recorder.state !== 'inactive'" (click)="stopRecord()">
+    End recording
+  </button>
+  <span *ngIf="recorder" id="state">{{recorder.state}}</span>
 </form>
 
-<video muted autoplay *ngIf="videoSrcObject" [srcObject]="videoSrcObject"></video>
+<video muted autoplay *ngIf="webcamSrcObject" [srcObject]="webcamSrcObject" id="webcam"></video>
+<ul id="ul"></ul>
