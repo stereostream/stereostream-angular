@@ -1,0 +1,20 @@
+<form class="example-form">
+  <md-form-field class="example-full-width">
+    <input mdInput placeholder="Enter text" [(ngModel)]="inputMsg" name="inputM"
+           onkeydown="event.keyCode === 13 && document.getElementById('sendMessage').click()">
+  </md-form-field>
+
+  <button md-button (click)="sendMessage()" [disabled]="!inputMsg.length" id="sendMessage" color="accent">
+    Send
+  </button>
+
+  <md-list>
+    <md-list-item *ngFor="let msg of received">
+      <p mdLine>{{msg.content}}</p>
+      <p mdLine>
+        [{{msg.user}}] <em>{{msg.date.fromNow()}}</em>
+      </p>
+    </md-list-item>
+  </md-list>
+</form>
+

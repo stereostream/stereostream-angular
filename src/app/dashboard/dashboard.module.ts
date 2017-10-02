@@ -9,13 +9,15 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialImportModule } from '../material-import/material-import.module';
 import { PlatformModule } from '@angular/cdk/platform';
 import { ObserversModule } from '@angular/cdk/observers';
+import { ChatModule } from '../chat/chat.module';
 
 @NgModule({
   imports: [
     CommonModule, RouterModule, RouterModule.forChild(dashboardRoutes),
     FlexLayoutModule, ObserversModule, PlatformModule,
     MaterialImportModule,
-    WebrtcModule
+    WebrtcModule,
+    ChatModule
   ],
   declarations: [
     DashboardComponent

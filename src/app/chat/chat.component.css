@@ -1,0 +1,4 @@
+.mat-list, .mat-nav-list, .mat-selection-list {
+  padding-top: 8px;
+  display: block;
+}

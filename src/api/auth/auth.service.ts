@@ -17,6 +17,10 @@ export class AuthService {
     return localStorage.getItem('access-token') !== null;
   }
 
+  static getAccessToken(): string {
+    return localStorage.getItem('access-token');
+  }
+
   static logout() {
     localStorage.removeItem('access-token');
   }
