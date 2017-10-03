@@ -23,7 +23,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      username: ['', Validators.required],
       password: ['', Validators.required]
     });
   }
@@ -37,7 +37,10 @@ export class AuthComponent implements OnInit, AfterViewInit {
 
   signInUp() {
     this.authService
-      .signinup(this.form.value as IAuthReq)
+      .signinup({
+        email: this.form.value.username,
+        password: this.form.value.password
+      })
       .subscribe((_user: IAuthReq | ILoginResp) => {
           if (_user.hasOwnProperty('access_token')) {
             this.authService._login(_user as ILoginResp);

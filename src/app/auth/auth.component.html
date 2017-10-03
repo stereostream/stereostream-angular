@@ -1,7 +1,7 @@
 <form [formGroup]="form" (ngSubmit)="signInUp()" *ngIf="form && !loggedIn()" novalidate>
   <p>
     <md-form-field class="example-full-width form-group">
-      <input mdInput formControlName="email" type="email" name="email" id="email" placeholder="Email">
+      <input mdInput formControlName="username" type="text" name="username" id="username" placeholder="Username">
     </md-form-field>
 
     <md-form-field class="example-full-width form-group">

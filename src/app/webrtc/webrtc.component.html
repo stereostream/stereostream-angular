@@ -5,7 +5,7 @@
     name="micSelector">
     <md-option *ngFor="let mic of mics" [value]="mic.deviceId">
       <!--{deviceId2Label[mic.deviceId]}-->
-      {{mic.deviceId}}
+      {{mic.label || deviceId2Label[mic.deviceId]}}
     </md-option>
   </md-select>
 
@@ -14,18 +14,20 @@
     [(ngModel)]="selectedCam"
     name="camSelector">
     <md-option *ngFor="let cam of cams" [value]="cam.deviceId">
-      {{deviceId2Label[cam.deviceId]}}
+      {{cam.label || deviceId2Label[cam.deviceId]}}
     </md-option>
   </md-select>
 
   <button md-raised-button color="primary" type="submit">
     Use
   </button>
-  <button md-raised-button id="record" *ngIf="webcamSrcObject"
-          (disabled)="recorder" (click)="startRecord()">
+  <button md-raised-button id="record" *ngIf="webcamSrcObject && (recorder ? recorder.state !== 'recording' : true)"
+          (click)="startRecord()">
+    <md-icon class="record_voice_over">record_voice_over</md-icon>
     Record
   </button>
   <button md-raised-button id="stopRecording" *ngIf="recorder && recorder.state !== 'inactive'" (click)="stopRecord()">
+    <md-icon class="stop">stop</md-icon>
     End recording
   </button>
   <span *ngIf="recorder" id="state">{{recorder.state}}</span>

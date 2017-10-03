@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { ServerStatusService } from '../../api/server-status/server-status.service';
@@ -10,14 +10,14 @@ import { AlertsService } from '../alerts/alerts.service';
   templateUrl: './server-status.component.html',
   styleUrls: ['./server-status.component.css']
 })
-export class ServerStatusComponent implements OnInit {
-  @Input() serverStatus: IServerStatus = {} as IServerStatus;
+export class ServerStatusComponent implements AfterViewInit {
+  @Input() serverStatus: {version: string} = {} as IServerStatus;
 
   constructor(private serverStatusService: ServerStatusService,
               private alertsService: AlertsService) {}
 
-  ngOnInit() {
-    this.serverStatus = { version: 'App 0.0.6; ' };
+  ngAfterViewInit() {
+    this.serverStatus = { version: 'App 0.0.7; ' };
     this.serverStatusService
       .get()
       .subscribe(
