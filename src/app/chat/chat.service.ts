@@ -3,11 +3,12 @@ import * as io_client from 'socket.io-client';
 import * as moment from 'moment';
 
 import { AuthService } from '../../api/auth/auth.service';
+import { ILogEntry } from '../../api/room/room.interfaces';
 
 @Injectable()
 export class ChatService {
   io: any /*SocketIOClientStatic*/;
-  public received: Array<{date: moment.Moment, user: string, content: string}> = [];
+  public received: ILogEntry[] = [];
 
   constructor() {
     this.io = io_client() as any;
@@ -19,12 +20,12 @@ export class ChatService {
     });
     this.io.on('chat message', (msg) => {
       const [date, user, content] = msg.split('\t');
-      this.received.push({ date: moment(new Date(date)), user, content });
+      this.received.push({ date: moment(new Date(date)), user, content } as ILogEntry);
     });
   }
 
-  sendMessage(msg: string) {
+  sendMessage(room: string, msg: string) {
     msg.replace('\t', '    ');
-    this.io.emit('chat message', `${AuthService.getAccessToken()}\t${msg}`);
+    this.io.emit('chat message', `${AuthService.getAccessToken()}\t${room}\t${msg}`);
   }
 }

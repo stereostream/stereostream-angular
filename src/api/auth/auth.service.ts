@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
@@ -13,6 +14,13 @@ import { AlertsService } from '../../app/alerts/alerts.service';
 export class AuthService {
   public access_token: string;
 
+  constructor(private http: HttpClient,
+              private router: Router,
+              private alertsService: AlertsService) {
+    const at = localStorage.getItem('access-token');
+    if (at != null) this.access_token = at;
+  }
+
   static loggedIn(): boolean {
     return localStorage.getItem('access-token') !== null;
   }
@@ -21,8 +29,11 @@ export class AuthService {
     return localStorage.getItem('access-token');
   }
 
-  static logout() {
+  logout() {
     localStorage.removeItem('access-token');
+    localStorage.removeItem('user');
+    this.router
+      .navigate(['/'], { queryParams: { redirectUrl: this.router.url } });
   }
 
   _login(login_resp: ILoginResp) {
@@ -30,17 +41,13 @@ export class AuthService {
     localStorage.setItem('access-token', this.access_token);
   }
 
-  constructor(private http: HttpClient,
-              private alertsService: AlertsService) {
-    const at = localStorage.getItem('access-token');
-    if (at != null) this.access_token = at;
-  }
-
   public login(user: IAuthReq): Observable<IAuthReq> {
+    localStorage.setItem('user', user.email);
     return this.http.post<IAuthReq>('/api/auth', user);
   }
 
   public register(user: IAuthReq): Observable<HttpResponse<IAuthReq>> {
+    localStorage.setItem('user', user.email);
     return this.http.post<IAuthReq>('/api/user', user, { observe: 'response' });
   }
 
@@ -49,7 +56,7 @@ export class AuthService {
     return this
       .login(user)
       .catch((err: HttpErrorResponse) =>
-        err.error.indexOf(error) > -1 ?
+        err && err.error && err.error.indexOf(error) > -1 ?
           this.alertsService.add(error) || Observable.throw(error) :
           this.register(user)
             .map(o => Object.assign(o.body, { access_token: o.headers.get('X-Access-Token') }))

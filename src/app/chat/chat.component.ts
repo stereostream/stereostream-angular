@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+
+import { RoomService } from '../../api/room/room.service';
 import { ChatService } from './chat.service';
 
 @Component({
@@ -8,18 +11,25 @@ import { ChatService } from './chat.service';
 })
 export class ChatComponent implements OnInit {
   inputMsg = '';
-  received: ChatService['received'] = [];
+  room: string;
+  user: string;
 
-  constructor(private chatService: ChatService) {
-    this.received = this.chatService.received;
+  constructor(public chatService: ChatService,
+              private roomService: RoomService,
+              private route: ActivatedRoute) {
+    this.route.url.subscribe(seg => this.room = seg[1].path);
+    this.user = localStorage.getItem('user');
   }
 
   ngOnInit() {
+    this.roomService
+      .get(this.room)
+      .subscribe(room => this.chatService.received = (room.log || []));
   }
 
   sendMessage(): void {
     /* tslint:disable:no-unused-expression */
-    this.inputMsg && this.chatService.sendMessage(this.inputMsg);
+    this.room && this.inputMsg && this.chatService.sendMessage(this.room, this.inputMsg);
     this.inputMsg = '';
   }
 }

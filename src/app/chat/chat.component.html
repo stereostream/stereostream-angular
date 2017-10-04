@@ -1,20 +1,19 @@
-<form class="example-form">
+<form class="example-form" (ngSubmit)="sendMessage()">
   <md-form-field class="example-full-width">
     <input mdInput placeholder="Enter text" [(ngModel)]="inputMsg" name="inputM"
            onkeydown="event.keyCode === 13 && document.getElementById('sendMessage').click()">
   </md-form-field>
-
-  <button md-button (click)="sendMessage()" [disabled]="!inputMsg.length" id="sendMessage" color="accent">
+  <button md-button [disabled]="!inputMsg.length" id="sendMessage" color="accent" type="submit">
     Send
   </button>
-
-  <md-list>
-    <md-list-item *ngFor="let msg of received">
-      <p mdLine>{{msg.content}}</p>
-      <p mdLine>
-        [{{msg.user}}] <em>{{msg.date.fromNow()}}</em>
-      </p>
-    </md-list-item>
-  </md-list>
 </form>
 
+<md-list class="make-scrollable" #chatLog>
+  <md-list-item *ngFor="let msg of chatService.received.reverse()"
+                [style.background-color]="msg.user === user ? 'lightsteelblue': 'mediumseagreen'">
+    <p mdLine>{{msg.content}}</p>
+    <p mdLine>
+      [{{msg.user}}] <em>{{msg.date.fromNow()}}</em>
+    </p>
+  </md-list-item>
+</md-list>

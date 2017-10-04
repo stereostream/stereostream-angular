@@ -13,4 +13,4 @@ import { WebrtcComponent } from './webrtc.component';
   declarations: [WebrtcComponent],
   exports: [WebrtcComponent]
 })
-export class WebrtcModule { }
+export class WebrtcModule {}

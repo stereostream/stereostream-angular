@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MdSnackBar, MdSnackBarConfig } from '@angular/material';
+
 import { TAlert } from './alerts.types';
 
 @Injectable()
@@ -11,14 +12,14 @@ export class AlertsService {
   }
 
   public add(alert: string | TAlert | Error, action?: string, config?: MdSnackBarConfig): void {
-    const alert_s = typeof alert === 'string' ? alert
+    const alert_s = alert && (typeof alert === 'string' ? alert
       : (alert instanceof Error ? alert.message : Object
         .keys(alert)
         .map(k => alert[k])
-        .join('\t'));
+        .join('\t'))) || 'undefined alert';
 
     this.alerts.push(alert_s);
     // console.warn('AlertsService::alerts =', this.alerts, ';');
-    this.snackBar.open(alert_s, action, config);
+    this.snackBar.open(alert_s, action || 'Close', config);
   }
 }

@@ -4,7 +4,7 @@
   <span class="example-fill-remaining-space"></span>
 
   <span *ngIf="loggedIn()">
-    <button md-button (click)="logout()" color="secondary">
+    <button md-button (click)="authService.logout()" color="secondary">
       Logout
     </button>
     <button md-raised-button routerLink="/rooms" color="accent">

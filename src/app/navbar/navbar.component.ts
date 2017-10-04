@@ -11,11 +11,11 @@ import { AlertsService } from '../alerts/alerts.service';
 })
 export class NavbarComponent implements AfterViewInit {
   loggedIn = AuthService.loggedIn;
-  logout = AuthService.logout;
   title: string;
 
   constructor(private serverStatusService: ServerStatusService,
-              private alertsService: AlertsService) { }
+              private alertsService: AlertsService,
+              protected authService: AuthService) { }
 
   ngAfterViewInit() {
     const dictate = 'network not connected; reconnect and stop->run';
@@ -23,7 +23,7 @@ export class NavbarComponent implements AfterViewInit {
       .get()
       .subscribe(
         serverStatus => {
-          if (typeof serverStatus.private_ip === 'undefined') {
+          if (!serverStatus || typeof serverStatus.private_ip === 'undefined') {
             this.title = dictate;
             this.alertsService.add(dictate);
           } else this.title = serverStatus.private_ip;

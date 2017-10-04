@@ -2,3 +2,8 @@
   padding-top: 8px;
   display: block;
 }
+
+md-list.make-scrollable {
+  height: 200px;
+  overflow-y: scroll;
+}

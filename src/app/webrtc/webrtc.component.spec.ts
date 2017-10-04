@@ -8,9 +8,9 @@ describe('WebrtcComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ WebrtcComponent ]
+      declarations: [WebrtcComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

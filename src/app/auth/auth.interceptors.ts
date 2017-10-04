@@ -7,8 +7,8 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 
-import { AlertsService } from '../alerts/alerts.service';
 import { AuthService } from '../../api/auth/auth.service';
+import { AlertsService } from '../alerts/alerts.service';
 
 
 @Injectable()
@@ -18,13 +18,17 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>,
             next: HttpHandler): Observable<HttpEvent<any>> {
-    return next.handle(req.clone({ headers: req.headers.set('X-Access-Token', AuthService.getAccessToken()) }))
+    return next.handle(AuthService.loggedIn() ?
+      req.clone({ headers: req.headers.set('X-Access-Token', AuthService.getAccessToken()) })
+      : req)
       .catch((err: any, caught) => {
         if (err instanceof HttpErrorResponse)
           switch (err.status) {
             case 403:
-              if (err.error.message === 'NotFound: X-Access-Token header must be included') {
+              if (!this.router.isActive('auth', false)
+              /*err.error.message === 'NotFound: X-Access-Token header must be included'*/) {
                 this.alertsService.add('Authentication required');
+
 
                 this.router
                   .navigate(['auth'], { queryParams: { redirectUrl: this.router.url } })
