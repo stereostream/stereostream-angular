@@ -1,0 +1,20 @@
+<md-list>
+  <md-list-item *ngFor="let room of rooms">
+    <a mdLine [routerLink]="['/room', room.name]">
+      {{room.name}} by {{room.owner}}
+    </a>
+  </md-list-item>
+</md-list>
+
+<md-card>
+  <md-card-header>Create room</md-card-header>
+  <md-card-content>
+    <form class="example-form" (ngSubmit)="addRoom()">
+      <md-form-field class="example-full-width">
+        <input mdInput placeholder="Room name" name="name" [(ngModel)]="name"
+               onkeydown="event.keyCode === 13 && document.getElementById('go').click()">
+      </md-form-field>
+      <button md-raised-button *ngIf="name" type="submit" color="primary" id="go">Go</button>
+    </form>
+  </md-card-content>
+</md-card>

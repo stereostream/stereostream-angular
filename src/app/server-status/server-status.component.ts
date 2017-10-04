@@ -11,13 +11,14 @@ import { AlertsService } from '../alerts/alerts.service';
   styleUrls: ['./server-status.component.css']
 })
 export class ServerStatusComponent implements AfterViewInit {
-  @Input() serverStatus: {version: string} = {} as IServerStatus;
+  @Input() serverStatus: {version: string} = {
+    version: 'App 0.0.8; '
+  } as IServerStatus;
 
   constructor(private serverStatusService: ServerStatusService,
               private alertsService: AlertsService) {}
 
   ngAfterViewInit() {
-    this.serverStatus = { version: 'App 0.0.7; ' };
     this.serverStatusService
       .get()
       .subscribe(

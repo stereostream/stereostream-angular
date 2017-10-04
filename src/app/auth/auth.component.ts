@@ -31,7 +31,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     if (AuthService.loggedIn())
       this.router
-        .navigate(['/dashboard'])
+        .navigate(['/rooms'])
         .then(() => {});
   }
 
@@ -45,7 +45,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
           if (_user.hasOwnProperty('access_token')) {
             this.authService._login(_user as ILoginResp);
             this.router
-              .navigate(['/dashboard'])
+              .navigate(['/rooms'])
               .then(() => {});
           } else this.alertsService.add(`Unexpected: ${JSON.stringify(_user)};`);
         }
