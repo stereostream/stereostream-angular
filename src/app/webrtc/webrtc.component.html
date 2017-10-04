@@ -33,5 +33,7 @@
   <span *ngIf="recorder" id="state">{{recorder.state}}</span>
 </form>
 
-<video muted autoplay *ngIf="webcamSrcObject" [srcObject]="webcamSrcObject" id="webcam"></video>
+<video muted autoplay *ngIf="webcamSrcObject" [srcObject]="webcamSrcObject" #leftVideo>
+</video>
+<video #rightVideo autoplay controls></video>
 <ul id="ul"></ul>

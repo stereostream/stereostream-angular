@@ -30,6 +30,7 @@
     "moment": "^2.18.1",
     "rxjs": "^5.4.3",
     "socket.io-client": "^2.0.3",
+    "webrtc-adapter": "^5.0.4",
     "zone.js": "^0.8.18"
   },
   "devDependencies": {

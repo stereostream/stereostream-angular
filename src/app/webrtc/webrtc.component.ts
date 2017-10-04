@@ -1,6 +1,8 @@
-import { AfterViewInit, Component, Input } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
 
+import { HTMLVideoElement } from '../../polyfills.d';
 import { AlertsService } from '../alerts/alerts.service';
+import { WebRtcStreamer } from './webrtc.streaming';
 
 declare const MediaRecorder: any;
 
@@ -10,9 +12,11 @@ declare const MediaRecorder: any;
   styleUrls: ['./webrtc.component.css']
 })
 export class WebrtcComponent implements AfterViewInit {
-  @Input() webcamSrcObject: HTMLVideoElement['srcObject'];
-  @Input() previewSrcObject: HTMLVideoElement['srcObject'];
-  @Input() downloadHref: HTMLLinkElement['href'];
+  webcam: HTMLVideoElement;
+  preview: HTMLVideoElement;
+  webcamSrcObject: HTMLVideoElement['srcObject'];
+  previewSrcObject: HTMLVideoElement['srcObject'];
+  downloadHref: HTMLLinkElement['href'];
   @Input() name: string;
 
   selectedCam: string;
@@ -23,6 +27,11 @@ export class WebrtcComponent implements AfterViewInit {
   deviceId2Label: {[index: string]: string} = {};
   deviceId2Device: {[index: string]: MediaDeviceInfo} = {};
   recorder: any /* MediaRecorder */;
+
+  @ViewChild('leftVideo') leftVideo: ElementRef;
+  @ViewChild('rightVideo') rightVideo: ElementRef;
+
+  webrtcStreamer: WebRtcStreamer;
 
   constructor(private alertsService: AlertsService) { }
 
@@ -79,6 +88,9 @@ export class WebrtcComponent implements AfterViewInit {
   startRecord() {
     this.recorder = new MediaRecorder(this.webcamSrcObject);
     this.recorder.start();
+    this.webrtcStreamer = new WebRtcStreamer(
+      this.leftVideo.nativeElement, this.rightVideo.nativeElement
+    );
   }
 
   stopRecord() {
