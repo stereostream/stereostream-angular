@@ -18,6 +18,7 @@ import { AuthService } from '../api/auth/auth.service';
 import { AuthInterceptor } from './auth/auth.interceptors';
 import { RoomsModule } from './rooms/rooms.module';
 import { RoomModule } from './room/room.module';
+import { DirectoryModule } from './directory/directory.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -30,6 +31,7 @@ import { RoomModule } from './room/room.module';
     MaterialImportModule,
     NavbarModule,
     FooterModule,
+    DirectoryModule,
     RoomsModule,
     RoomModule
   ],

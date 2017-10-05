@@ -7,4 +7,5 @@ export const appRoutes: Routes = [
   { path: 'auth', loadChildren: 'app/auth/auth.module#AuthModule' },
   { path: 'rooms', loadChildren: 'app/rooms/rooms.module#RoomsModule', canActivate: [AuthGuard] },
   { path: 'room', loadChildren: 'app/room/room.module#RoomModule', canActivate: [AuthGuard] },
+  { path: 'directory', loadChildren: 'app/directory/directory.module#DirectoryModule' }
 ];

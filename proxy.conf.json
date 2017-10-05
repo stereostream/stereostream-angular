@@ -6,5 +6,9 @@
   "/socket.io": {
     "target": "http://localhost:3000",
     "secure": false
+  },
+  "/Downloads": {
+    "target": "http://localhost/Downloads",
+    "secure": false
   }
 }

@@ -1,0 +1,11 @@
+<h4>Video files and all folders from Downloads on server.</h4>
+
+<ul *ngFor="let f of dirs">
+  <li *ngIf="f.type === 'directory'">
+    {{f.name}}
+  </li>
+  <li *ngIf="f.type === 'file'">
+    <h3>{{f.name}} taken {{f.mtime}}</h3>
+    <video [src]="getUrl(f)" controls></video>
+  </li>
+</ul>
