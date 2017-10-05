@@ -4,8 +4,7 @@
     [(ngModel)]="selectedMic"
     name="micSelector">
     <md-option *ngFor="let mic of mics" [value]="mic.deviceId">
-      <!--{deviceId2Label[mic.deviceId]}-->
-      {{mic.label || deviceId2Label[mic.deviceId]}}
+      {{mic.label || mic.deviceId}}
     </md-option>
   </md-select>
 
@@ -14,24 +13,48 @@
     [(ngModel)]="selectedCam"
     name="camSelector">
     <md-option *ngFor="let cam of cams" [value]="cam.deviceId">
-      {{cam.label || deviceId2Label[cam.deviceId]}}
+      {{cam.label || cam.deviceId}}
     </md-option>
   </md-select>
 
   <button md-raised-button color="primary" type="submit">
     Use
   </button>
-  <button md-raised-button id="record" *ngIf="webcamSrcObject && (recorder ? recorder.state !== 'recording' : true)"
-          (click)="startRecord()">
-    <md-icon class="record_voice_over">record_voice_over</md-icon>
-    Record
-  </button>
-  <button md-raised-button id="stopRecording" *ngIf="recorder && recorder.state !== 'inactive'" (click)="stopRecord()">
-    <md-icon class="stop">stop</md-icon>
-    End recording
-  </button>
-  <span *ngIf="recorder" id="state">{{recorder.state}}</span>
 </form>
+<button md-raised-button id="record" *ngIf="stream && (recorder ? recorder.state !== 'recording' : true)"
+        (click)="startRecord()">
+  <md-icon class="record_voice_over">record_voice_over</md-icon>
+  Record
+</button>
+<button md-raised-button id="stopRecording" *ngIf="recorder && recorder.state !== 'inactive'" (click)="stopRecord()">
+  <md-icon class="stop">stop</md-icon>
+  End recording
+</button>
+<span *ngIf="recorder" id="state">{{recorder.state}}</span>
 
-<video muted autoplay *ngIf="webcamSrcObject" [srcObject]="webcamSrcObject" id="webcam"></video>
+<video muted autoplay *ngIf="stream" #webcam></video>
+<!--
+<div #broadcast></div>
+<button md-button (disabled)="openRtcRoomToggle" (click)="openRtcRoom()">
+  Open Room
+</button>
+<button md-button (disabled)="joinRtcRoomToggle" (click)="joinRtcRoom()">
+  Join Room
+</button>
+-->
 <ul id="ul"></ul>
+
+<!--
+<label for="yourId">YourID</label>
+<textarea id="yourId"></textarea>
+<label for="otherId">OtherID</label>
+<textarea id="otherId"></textarea>
+
+
+<form (ngSubmit)="sub($event)">
+  <label for="incoming">Incoming</label>
+  <textarea [(ngModel)]="incoming" name="incoming" id="incoming"></textarea>
+  <button type="submit">submit</button>
+</form>
+<pre>outgoing = {{outgoing | json}}</pre>
+-->

@@ -14,9 +14,9 @@ export class ChatComponent implements OnInit {
   room: string;
   user: string;
 
-  constructor(public chatService: ChatService,
-              private roomService: RoomService,
-              private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute,
+              public chatService: ChatService,
+              private roomService: RoomService) {
     this.route.url.subscribe(seg => this.room = seg[1].path);
     this.user = localStorage.getItem('user');
   }

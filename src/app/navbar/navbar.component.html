@@ -1,5 +1,5 @@
 <md-toolbar color="primary">
-  <a routerLink="/">{{title}}</a>
+  <a routerLink="/" style="text-shadow: whitesmoke">{{title}}</a>
 
   <span class="example-fill-remaining-space"></span>
 
@@ -11,7 +11,7 @@
       Rooms
     </button>
   </span>
-  <a routerLink="/auth" *ngIf="!loggedIn()">
-    <md-icon class="account_box">account_box</md-icon>
-  </a>
+  <button *ngIf="!loggedIn()" md-raised-button routerLink="/auth" color="accent">
+    Login/join
+  </button>
 </md-toolbar>

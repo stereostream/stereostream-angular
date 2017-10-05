@@ -28,4 +28,8 @@ export class ChatService {
     msg.replace('\t', '    ');
     this.io.emit('chat message', `${AuthService.getAccessToken()}\t${room}\t${msg}`);
   }
+
+  /*sendBlob(room: string, blob: Blob) {
+    this.io.emit('video', [room, blob]);
+  }*/
 }

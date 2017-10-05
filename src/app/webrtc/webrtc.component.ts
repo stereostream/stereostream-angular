@@ -1,8 +1,21 @@
-import { AfterViewInit, Component, Input } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 import { AlertsService } from '../alerts/alerts.service';
 
+// import * as Peer from 'simple-peer';
+// import 'rtcmulticonnection-v3/dist/RTCMultiConnection';
+
 declare const MediaRecorder: any;
+
+interface IRTCMultiConnection {
+  socketURL: string;
+  session: {audio: boolean, video: boolean};
+  sdpConstraints: {mandatory: {OfferToReceiveAudio: boolean, OfferToReceiveVideo: boolean}};
+  onstream: (event: Event) => void;
+  open: (roomid: string) => void;
+  join: (roomid: string) => void;
+}
 
 @Component({
   selector: 'app-webrtc',
@@ -10,10 +23,10 @@ declare const MediaRecorder: any;
   styleUrls: ['./webrtc.component.css']
 })
 export class WebrtcComponent implements AfterViewInit {
-  @Input() webcamSrcObject: HTMLVideoElement['srcObject'];
-  @Input() previewSrcObject: HTMLVideoElement['srcObject'];
-  @Input() downloadHref: HTMLLinkElement['href'];
   @Input() name: string;
+  @ViewChildren('webcam') webcam: QueryList<ElementRef>;
+  @ViewChild('broadcast') broadcast: HTMLDivElement;
+  stream = HTMLVideoElement['srcObject'];
 
   selectedCam: string;
   selectedMic: string;
@@ -24,14 +37,87 @@ export class WebrtcComponent implements AfterViewInit {
   deviceId2Device: {[index: string]: MediaDeviceInfo} = {};
   recorder: any /* MediaRecorder */;
 
-  constructor(private alertsService: AlertsService) { }
+  room: string;
+
+  /* peer: Peer.Instance;
+  targetpeer: any;
+  outgoing: string;
+  incoming: string;
+
+  connection: IRTCMultiConnection;
+  openRtcRoomToggle = true;
+  joinRtcRoomToggle = true;
+  */
+
+  constructor(private route: ActivatedRoute,
+              private alertsService: AlertsService/*,
+              private chatService: ChatService,
+              private serverStatusService: ServerStatusService*/) {
+    this.route.url.subscribe(seg => this.room = seg[1].path);
+  }
+
+  /*sub(ev) {
+    ev.preventDefault();
+    this.peer.signal(JSON.stringify({ incoming: this.incoming }));
+  }
+  */
 
   ngAfterViewInit() {
+    /*
+    this.peer = new Peer({ initiator: location.hash === '#1', trickle: false });
+    this.peer.on('error', err => { console.log('error', err); });
+
+    this.peer.on('signal', data => {
+      console.log('SIGNAL', JSON.stringify(data));
+      this.outgoing = JSON.stringify(data);
+    });
+
+    this.peer.on('connect', () => {
+      console.log('CONNECT');
+      this.peer.send('whatever' + Math.random());
+    });
+
+    this.peer.on('data', data => {
+      console.log('data: ' + data);
+    });
+
+    const RTCMultiConnection: (roomid?: string, forceOptions?) => void = window['RTCMultiConnection'];
+    this.connection = new RTCMultiConnection(*/
+    /*this.room*/
+    /*);
+        this.serverStatusService.get().subscribe(serverStatus => {
+          this.connection.socketURL = `${location.protocol}//${serverStatus.private_ip}/`;
+          this.connection.session = {
+            audio: true,
+            video: true
+          };
+
+          this.connection.sdpConstraints.mandatory = {
+            OfferToReceiveAudio: true,
+            OfferToReceiveVideo: true
+          };
+
+          this.connection.onstream = (event: Event & {mediaElement: HTMLVideoElement}) => {
+            this.broadcast.appendChild(event.mediaElement);
+          };
+        });
+        */
+
     navigator.mediaDevices
       .enumerateDevices()
       .then(this.gotDevices.bind(this))
       .catch(this.alertsService.add.bind(this.alertsService));
   }
+
+  /*openRtcRoom() {
+    this.openRtcRoomToggle = false;
+    this.connection.open(this.room);
+  }
+
+  joinRtcRoom() {
+    this.joinRtcRoomToggle = false;
+    this.connection.join(this.room);
+  }*/
 
   gotDevices(deviceInfos: MediaDeviceInfo[]) {
     this.mediaDeviceInfos = deviceInfos;
@@ -77,7 +163,7 @@ export class WebrtcComponent implements AfterViewInit {
   }
 
   startRecord() {
-    this.recorder = new MediaRecorder(this.webcamSrcObject);
+    this.recorder = new MediaRecorder(this.stream);
     this.recorder.start();
   }
 
@@ -97,6 +183,10 @@ export class WebrtcComponent implements AfterViewInit {
   }
 
   gotStream(stream: HTMLVideoElement['srcObject']) {
-    this.webcamSrcObject = stream;
+    // this.showWebcam = true;
+    this.stream = stream;
+    this.webcam.changes.subscribe(() =>
+      (this.webcam.first.nativeElement as HTMLVideoElement).srcObject = stream
+    );
   }
 }

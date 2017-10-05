@@ -4,16 +4,21 @@
 
 @include mat-core();
 
-$primary: mat-palette($mat-blue-grey);
-$accent: mat-palette($mat-amber, 800, A100, A400);
+$primary: mat-palette($mat-deep-orange);
+$accent: mat-palette($mat-deep-purple, 800, A100, A400);
 
 $theme: mat-light-theme($primary, $accent);
 
 @include angular-material-theme($theme);
 
 a {
-  color: whitesmoke /*$theme.primary*/
-;
+  color: whitesmoke;
+}
+
+// $theme.primary
+
+.mat-simple-snackbar-action {
+  color: orangered;
 }
 
 .m2app-dark {

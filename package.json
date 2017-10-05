@@ -1,6 +1,6 @@
 {
   "name": "stereostream-angular",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -28,7 +28,9 @@
     "core-js": "^2.5.1",
     "hammerjs": "^2.0.8",
     "moment": "^2.18.1",
+    "rtcmulticonnection-v3": "^3.4.4",
     "rxjs": "^5.4.3",
+    "simple-peer": "^8.1.1",
     "socket.io-client": "^2.0.3",
     "zone.js": "^0.8.18"
   },
@@ -39,6 +41,7 @@
     "@types/jasmine": "~2.6.0",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "~8.0.31",
+    "@types/simple-peer": "^6.1.3",
     "codelyzer": "~3.2.0",
     "jasmine-core": "~2.8.0",
     "jasmine-spec-reporter": "~4.2.1",
