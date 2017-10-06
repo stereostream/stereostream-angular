@@ -17,20 +17,20 @@
     </md-option>
   </md-select>
 
-  <button md-raised-button color="primary" type="submit">
+  <button md-raised-button color="primary" type="submit" *ngIf="!recorder || recorder.state === 'inactive'">
     Use
   </button>
+  <button md-raised-button id="record" *ngIf="stream && (recorder ? recorder.state !== 'recording' : true)"
+          (click)="startRecord()">
+    <md-icon class="record_voice_over">record_voice_over</md-icon>
+    Record
+  </button>
+  <button md-raised-button id="stopRecording" *ngIf="recorder && recorder.state !== 'inactive'" (click)="stopRecord()">
+    <md-icon class="stop">stop</md-icon>
+    End recording
+  </button>
+  <span *ngIf="recorder" id="state">{{recorder.state}}</span>
 </form>
-<button md-raised-button id="record" *ngIf="stream && (recorder ? recorder.state !== 'recording' : true)"
-        (click)="startRecord()">
-  <md-icon class="record_voice_over">record_voice_over</md-icon>
-  Record
-</button>
-<button md-raised-button id="stopRecording" *ngIf="recorder && recorder.state !== 'inactive'" (click)="stopRecord()">
-  <md-icon class="stop">stop</md-icon>
-  End recording
-</button>
-<span *ngIf="recorder" id="state">{{recorder.state}}</span>
 
 <video muted autoplay *ngIf="stream" #webcam></video>
 <!--
@@ -42,7 +42,6 @@
   Join Room
 </button>
 -->
-<ul id="ul"></ul>
 
 <!--
 <label for="yourId">YourID</label>

@@ -5,10 +5,12 @@ import { RouterModule } from '@angular/router';
 import { DirectoryComponent } from './directory.component';
 import { DirectoryService } from './directory.service';
 import { dirRoutes } from './directory.routes';
+import { MaterialImportModule } from '../material-import/material-import.module';
 
 @NgModule({
   imports: [
-    CommonModule, RouterModule, RouterModule.forChild(dirRoutes)
+    CommonModule, RouterModule, RouterModule.forChild(dirRoutes),
+    MaterialImportModule
   ],
   providers: [DirectoryService],
   declarations: [DirectoryComponent],

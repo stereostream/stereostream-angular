@@ -79,6 +79,31 @@ const promisifiedOldGUM = function(constraints, successCallback, errorCallback) 
   });
 };
 
+// Schwartzian transform from https://stackoverflow.com/a/10124053
+(function() {
+  if (typeof Object.defineProperty === 'function') {
+    try {Object.defineProperty(Array.prototype, 'sortBy', { value: sb }); } catch (e) {}
+  }
+  if (!Array.prototype['sortBy']) Array.prototype['sortBy'] = sb;
+
+  function sb(f) {
+    for (let i = this.length; i;) {
+      const o = this[--i];
+      this[i] = [].concat(f.call(o, o, i), o);
+    }
+    this.sort(function(a, b) {
+      for (let i = 0, len = a.length; i < len; ++i) {
+        if (a[i] != b[i]) return a[i] < b[i] ? -1 : 1;
+      }
+      return 0;
+    });
+    for (let i = this.length; i;) {
+      this[--i] = this[i][this[i].length - 1];
+    }
+    return this;
+  }
+})();
+
 // Some browsers partially implement mediaDevices. We can't just assign an object
 // with getUserMedia as it would overwrite existing properties.
 // Here, we will just add the getUserMedia property if it's missing.
