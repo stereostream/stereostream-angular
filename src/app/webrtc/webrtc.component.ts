@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ElementRef, Input, QueryList, ViewChild, View
 import { ActivatedRoute } from '@angular/router';
 
 import { AlertsService } from '../alerts/alerts.service';
+import { WebrtcService } from './webrtc.service';
 
 // import * as Peer from 'simple-peer';
 // import 'rtcmulticonnection-v3/dist/RTCMultiConnection';
@@ -50,7 +51,9 @@ export class WebrtcComponent implements AfterViewInit {
   */
 
   constructor(private route: ActivatedRoute,
-              private alertsService: AlertsService/*,
+              private alertsService: AlertsService,
+              private webrtcService: WebrtcService
+              /*,
               private chatService: ChatService,
               private serverStatusService: ServerStatusService*/) {
     this.route.url.subscribe(seg => this.room = seg[1].path);
@@ -165,20 +168,14 @@ export class WebrtcComponent implements AfterViewInit {
   startRecord() {
     this.recorder = new MediaRecorder(this.stream);
     this.recorder.start();
+    this.recorder.ondataavailable = e =>
+      this.webrtcService.recorded.push({
+        download: `${Date.now() / 1000}.${this.name}.RecordedVideo.webm`,
+        href: URL.createObjectURL(e.data)
+      });
   }
 
   stopRecord() {
-    this.recorder.ondataavailable = e => {
-      const ul = document.getElementById('ul');
-      ul.style.display = 'block';
-      const a = document.createElement('a'),
-        li = document.createElement('li');
-      a.download = `${Date.now() / 1000}.${this.name}.RecordedVideo.webm`;
-      a.href = URL.createObjectURL(e.data);
-      a.textContent = a.download;
-      li.appendChild(a);
-      ul.appendChild(li);
-    };
     this.recorder.stop();
   }
 

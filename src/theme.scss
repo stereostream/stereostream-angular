@@ -12,10 +12,8 @@ $theme: mat-light-theme($primary, $accent);
 @include angular-material-theme($theme);
 
 a {
-  color: whitesmoke;
+  color: whitesmoke; // $theme.primary
 }
-
-// $theme.primary
 
 .mat-simple-snackbar-action {
   color: orangered;

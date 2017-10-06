@@ -1,4 +1,4 @@
-<h3>{{name}}</h3>
+<h1 class="md-h1">{{name}}</h1>
 
 <md-card class="card-demo">
   <md-card-title>Add cameras</md-card-title>
@@ -7,18 +7,22 @@
     <div class="containerX" fxLayout="row">
       <div fxLayout="row" class="coloredContainerX box">
         <div fxFlex.gt-sm="50" fxFlex="50">
-          <h2>Camera 0</h2>
+          <h2 class="md-h2">Camera 0</h2>
           <app-webrtc [name]="'camera0'"></app-webrtc>
         </div>
         <div fxFlex.gt-sm="50" fxFlex="50">
-          <h2>Camera 1</h2>
+          <h2 class="md-h2">Camera 1</h2>
           <app-webrtc [name]="'camera1'"></app-webrtc>
         </div>
       </div>
     </div>
   </md-card-content>
   <md-card-footer>
-    <ul id="ul"></ul>
+    <ul id="recorded">
+      <li *ngFor="let record of webrtcService.recorded">
+        <a [href]="record.href" [download]="record.download">{{record.download}}</a>
+      </li>
+    </ul>
   </md-card-footer>
 </md-card>
 

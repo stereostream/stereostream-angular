@@ -12,7 +12,7 @@ import { AlertsService } from '../alerts/alerts.service';
 })
 export class ServerStatusComponent implements AfterViewInit {
   @Input() serverStatus: {version: string} = {
-    version: 'App 0.0.12; '
+    version: 'App 0.0.13; '
   } as IServerStatus;
 
   constructor(private serverStatusService: ServerStatusService,

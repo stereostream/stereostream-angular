@@ -8,6 +8,7 @@ import { roomRoutes } from './room.routes';
 import { ChatModule } from '../chat/chat.module';
 import { WebrtcModule } from '../webrtc/webrtc.module';
 import { MaterialImportModule } from '../material-import/material-import.module';
+import { WebrtcService } from '../webrtc/webrtc.service';
 
 @NgModule({
   imports: [
@@ -15,7 +16,7 @@ import { MaterialImportModule } from '../material-import/material-import.module'
     MaterialImportModule,
     WebrtcModule, ChatModule
   ],
-  providers: [RoomService],
+  providers: [RoomService, WebrtcService],
   declarations: [RoomComponent]
 })
 export class RoomModule {}

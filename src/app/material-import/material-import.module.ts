@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
+
+import { MdCommonModule } from '@angular/material/core';
 import {
   MdAutocompleteModule,
   MdButtonModule,
   MdCardModule,
   MdCheckboxModule,
-  MdCommonModule,
   MdDialogModule,
   MdFormFieldModule,
   MdGridListModule,
@@ -17,7 +18,7 @@ import {
   MdSelectModule,
   MdSidenavModule,
   MdSnackBarModule,
-  MdToolbarModule
+  MdToolbarModule,
 } from '@angular/material';
 
 @NgModule({
@@ -27,7 +28,6 @@ import {
     MdButtonModule,
     MdCardModule,
     MdCheckboxModule,
-    MdCommonModule,
     MdDialogModule,
     MdFormFieldModule,
     MdGridListModule,
@@ -48,7 +48,6 @@ import {
     MdButtonModule,
     MdCardModule,
     MdCheckboxModule,
-    MdCommonModule,
     MdDialogModule,
     MdFormFieldModule,
     MdGridListModule,
