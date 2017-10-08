@@ -27,7 +27,9 @@ export class WebrtcComponent implements AfterViewInit {
   @Input() name: string;
   @ViewChildren('webcam') webcam: QueryList<ElementRef>;
   @ViewChild('broadcast') broadcast: HTMLDivElement;
-  stream = HTMLVideoElement['srcObject'];
+  @ViewChildren('remote') remote: QueryList<ElementRef>;
+
+  stream: HTMLVideoElement['srcObject'];
 
   selectedCam: string;
   selectedMic: string;
@@ -52,7 +54,7 @@ export class WebrtcComponent implements AfterViewInit {
 
   constructor(private route: ActivatedRoute,
               private alertsService: AlertsService,
-              private webrtcService: WebrtcService
+              protected webrtcService: WebrtcService
               /*,
               private chatService: ChatService,
               private serverStatusService: ServerStatusService*/) {
@@ -180,10 +182,16 @@ export class WebrtcComponent implements AfterViewInit {
   }
 
   gotStream(stream: HTMLVideoElement['srcObject']) {
-    // this.showWebcam = true;
     this.stream = stream;
-    this.webcam.changes.subscribe(() =>
-      (this.webcam.first.nativeElement as HTMLVideoElement).srcObject = stream
-    );
+    this.webcam.changes.subscribe(() => {
+      const webcamElem = this.webcam.first.nativeElement as HTMLVideoElement;
+      webcamElem.srcObject = stream;
+      /*this.remote.changes.subscribe(() =>
+        this.webrtcService.init(
+          webcamElem,
+          this.remote.first.nativeElement as HTMLVideoElement
+        )
+      );*/
+    });
   }
 }

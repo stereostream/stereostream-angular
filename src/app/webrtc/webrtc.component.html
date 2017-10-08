@@ -1,3 +1,11 @@
+<!--
+<hr>
+<button md-button (click)="webrtcService.call()">Call</button>
+<button md-button (click)="webrtcService.hangup()">Hang up</button>
+<video autoplay #remote></video>
+<hr>
+-->
+
 <form (ngSubmit)="getStream()">
   <md-select
     placeholder="microphone"
@@ -33,6 +41,7 @@
 </form>
 
 <video muted autoplay *ngIf="stream" #webcam></video>
+
 <!--
 <div #broadcast></div>
 <button md-button (disabled)="openRtcRoomToggle" (click)="openRtcRoom()">
