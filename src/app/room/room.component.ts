@@ -20,7 +20,5 @@ export class RoomComponent {
     );
   }
 
-  sanitize(url: string) {
-    return this.sanitizer.bypassSecurityTrustUrl(url);
-  }
+  sanitize = this.sanitizer.bypassSecurityTrustUrl;
 }

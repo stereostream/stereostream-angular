@@ -6,6 +6,7 @@ video {
 #record {
   background-color: forestgreen;
   color: white;
+  margin-top: 5px;
 }
 
 #stopRecording {

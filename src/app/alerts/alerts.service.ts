@@ -11,7 +11,7 @@ export class AlertsService {
     // this.alerts = [];
   }
 
-  public add(alert: string | TAlert | Error, action?: string, config?: MdSnackBarConfig): void {
+  public add(alert: string | TAlert | Error, action?: string | false, config?: MdSnackBarConfig): void {
     const alert_s = alert && (typeof alert === 'string' ? alert
       : (alert instanceof Error ? alert.message : Object
         .keys(alert)
@@ -20,6 +20,10 @@ export class AlertsService {
 
     this.alerts.push(alert_s);
     // console.warn('AlertsService::alerts =', this.alerts, ';');
-    this.snackBar.open(alert_s, action || 'Close', config);
+    this.snackBar.open(
+      alert_s,
+      !action && typeof action !== 'boolean' ? 'Close' : action as string,
+      config
+    );
   }
 }

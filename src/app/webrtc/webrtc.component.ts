@@ -177,6 +177,10 @@ export class WebrtcComponent implements AfterViewInit {
   }
 
   stopRecord() {
+    this.alertsService.add(
+      'Preparing video to download',
+      false, { duration: 2500 }
+    );
     this.recorder.stop();
   }
 
