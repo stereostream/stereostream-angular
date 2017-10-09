@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, QueryList, ViewChildren } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { AlertsService } from '../alerts/alerts.service';
@@ -26,8 +26,8 @@ interface IRTCMultiConnection {
 export class WebrtcComponent implements AfterViewInit {
   @Input() name: string;
   @ViewChildren('webcam') webcam: QueryList<ElementRef>;
-  @ViewChild('broadcast') broadcast: HTMLDivElement;
-  @ViewChildren('remote') remote: QueryList<ElementRef>;
+  /*@ViewChild('broadcast') broadcast: HTMLDivElement;
+   @ViewChildren('remote') remote: QueryList<ElementRef>;*/
 
   stream: HTMLVideoElement['srcObject'];
 
@@ -54,8 +54,7 @@ export class WebrtcComponent implements AfterViewInit {
 
   constructor(private route: ActivatedRoute,
               private alertsService: AlertsService,
-              protected webrtcService: WebrtcService
-              /*,
+              public webrtcService: WebrtcService/*,
               private chatService: ChatService,
               private serverStatusService: ServerStatusService*/) {
     this.route.url.subscribe(seg => this.room = seg[1].path);

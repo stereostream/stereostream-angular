@@ -14,6 +14,28 @@ export class WebrtcService {
   };
   private localVideo: HTMLVideoElement;
   private remoteVideo: HTMLVideoElement;
+  private onCreateAnswerSuccess = (desc: RTCSessionDescription) => {
+    this.trace('Answer from pc2:\n' + desc.sdp);
+    this.trace('pc2 setLocalDescription start');
+    this.pc2.setLocalDescription(desc).then(
+      () => this.onSetLocalSuccess(this.pc2),
+      this.onSetSessionDescriptionError
+    );
+    this.trace('pc1 setRemoteDescription start');
+    this.pc1.setRemoteDescription(desc).then(
+      () => this.onSetRemoteSuccess(this.pc1),
+      this.onSetSessionDescriptionError
+    );
+  };
+  private onIceCandidate = (pc: RTCPeerConnection, event: RTCPeerConnectionIceEvent) => {
+    if (event.candidate) {
+      this.getOtherPc(pc)
+        .addIceCandidate(new RTCIceCandidate(event.candidate))
+        .then(() => this.onAddIceCandidateSuccess(pc),
+          err => this.onAddIceCandidateError(pc, err));
+      this.trace(this.getName(pc) + ' ICE candidate: \n' + event.candidate.candidate);
+    }
+  };
 
   private getName(pc: RTCPeerConnection): 'pc1' | 'pc2' {
     return pc === this.pc1 ? 'pc1' : 'pc2';
@@ -74,30 +96,6 @@ export class WebrtcService {
     this.trace('pc2 received remote stream');
   }
 
-  private onCreateAnswerSuccess = (desc: RTCSessionDescription) => {
-    this.trace('Answer from pc2:\n' + desc.sdp);
-    this.trace('pc2 setLocalDescription start');
-    this.pc2.setLocalDescription(desc).then(
-      () => this.onSetLocalSuccess(this.pc2),
-      this.onSetSessionDescriptionError
-    );
-    this.trace('pc1 setRemoteDescription start');
-    this.pc1.setRemoteDescription(desc).then(
-      () => this.onSetRemoteSuccess(this.pc1),
-      this.onSetSessionDescriptionError
-    );
-  }
-
-  private onIceCandidate = (pc: RTCPeerConnection, event: RTCPeerConnectionIceEvent) => {
-    if (event.candidate) {
-      this.getOtherPc(pc)
-        .addIceCandidate(new RTCIceCandidate(event.candidate))
-        .then(() => this.onAddIceCandidateSuccess(pc),
-          err => this.onAddIceCandidateError(pc, err));
-      this.trace(this.getName(pc) + ' ICE candidate: \n' + event.candidate.candidate);
-    }
-  }
-
   private onAddIceCandidateSuccess(pc: RTCPeerConnection) {
     this.trace(this.getName(pc) + ' addIceCandidate success');
   }
@@ -105,6 +103,19 @@ export class WebrtcService {
   private onAddIceCandidateError(pc: RTCPeerConnection, error: DOMError) {
     this.trace(this.getName(pc) + ' failed to add ICE Candidate: ' + error.toString());
   }
+
+  /*
+  public start = () => {
+    this.trace('Requesting local stream');
+    // startButton.disabled = true;
+    navigator
+      .mediaDevices
+      .getUserMedia({ audio: false, video: true })
+      .then(this.gotStream)
+      .catch(e => alert('getUserMedia() error: ' + e.name)
+      );
+  };
+  */
 
   private onIceStateChange(pc: RTCPeerConnection, event: Event) {
     if (pc) {
@@ -123,9 +134,6 @@ export class WebrtcService {
     } else {
       console.log(text);
     }
-  }
-
-  constructor() {
   }
 
   init = (localVideo: HTMLVideoElement, remoteVideo: HTMLVideoElement) => {
@@ -166,18 +174,8 @@ export class WebrtcService {
     };
   };
 
-  /*
-  public start = () => {
-    this.trace('Requesting local stream');
-    // startButton.disabled = true;
-    navigator
-      .mediaDevices
-      .getUserMedia({ audio: false, video: true })
-      .then(this.gotStream)
-      .catch(e => alert('getUserMedia() error: ' + e.name)
-      );
-  };
-  */
+  constructor() {
+  }
 
   public call() {
     /*callButton.disabled = true;
