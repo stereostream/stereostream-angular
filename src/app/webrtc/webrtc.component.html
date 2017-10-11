@@ -1,12 +1,11 @@
-<!--
-<hr>
-<button md-button (click)="webrtcService.call()">Call</button>
-<button md-button (click)="webrtcService.hangup()">Hang up</button>
-<video autoplay #remote></video>
-<hr>
--->
-
 <form (ngSubmit)="getStream()">
+  <div *ngIf="stream">
+    <hr>
+    <button md-button (click)="webrtcService.call()">Call</button>
+    <button md-button (click)="webrtcService.hangup()">Hang up</button>
+    <video autoplay #remote></video>
+    <hr>
+  </div>
   <div class="containerX" fxLayout="row">
     <div fxFlex="100%">
       <md-select

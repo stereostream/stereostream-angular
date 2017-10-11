@@ -11,6 +11,7 @@ import { WebrtcService } from '../webrtc/webrtc.service';
 })
 export class RoomComponent {
   name: string;
+  sanitize = this.sanitizer.bypassSecurityTrustUrl;
 
   constructor(private route: ActivatedRoute,
               private sanitizer: DomSanitizer,
@@ -19,6 +20,4 @@ export class RoomComponent {
       seg => this.name = seg[1].path
     );
   }
-
-  sanitize = this.sanitizer.bypassSecurityTrustUrl;
 }

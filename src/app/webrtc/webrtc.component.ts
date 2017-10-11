@@ -26,8 +26,8 @@ interface IRTCMultiConnection {
 export class WebrtcComponent implements AfterViewInit {
   @Input() name: string;
   @ViewChildren('webcam') webcam: QueryList<ElementRef>;
-  /*@ViewChild('broadcast') broadcast: HTMLDivElement;
-   @ViewChildren('remote') remote: QueryList<ElementRef>;*/
+  /*@ViewChild('broadcast') broadcast: HTMLDivElement;*/
+  @ViewChildren('remote') remote: QueryList<ElementRef>;
 
   stream: HTMLVideoElement['srcObject'];
 
@@ -189,12 +189,12 @@ export class WebrtcComponent implements AfterViewInit {
     this.webcam.changes.subscribe(() => {
       const webcamElem = this.webcam.first.nativeElement as HTMLVideoElement;
       webcamElem.srcObject = stream;
-      /*this.remote.changes.subscribe(() =>
+      this.remote.changes.subscribe(() =>
         this.webrtcService.init(
           webcamElem,
           this.remote.first.nativeElement as HTMLVideoElement
         )
-      );*/
+      );
     });
   }
 }
