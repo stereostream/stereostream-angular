@@ -26,8 +26,8 @@ interface IRTCMultiConnection {
 export class WebrtcComponent implements AfterViewInit {
   @Input() name: string;
   @ViewChildren('webcam') webcam: QueryList<ElementRef>;
-  /*@ViewChild('broadcast') broadcast: HTMLDivElement;*/
-  @ViewChildren('remote') remote: QueryList<ElementRef>;
+  /*@ViewChild('broadcast') broadcast: HTMLDivElement;
+  @ViewChildren('remote') remote: QueryList<ElementRef>;*/
 
   stream: HTMLVideoElement['srcObject'];
 
@@ -125,7 +125,7 @@ export class WebrtcComponent implements AfterViewInit {
 
   gotDevices(deviceInfos: MediaDeviceInfo[]) {
     this.mediaDeviceInfos = deviceInfos;
-    this.mediaDeviceInfos.forEach(device => {
+    this.mediaDeviceInfos.forEach((device: MediaDeviceInfo, idx: number) => {
         if (device.kind === 'audioinput')
           this.mics.push(device);
         else if (device.kind === 'videoinput')
@@ -133,8 +133,8 @@ export class WebrtcComponent implements AfterViewInit {
         else
           console.warn(`Unexpected: ${JSON.stringify(device)}`);
         this.deviceId2Label[device.deviceId] = {
-          audioinput: `microphone: ${device.deviceId}`,
-          videoinput: `camera: ${device.deviceId}`
+          audioinput: `microphone ${(9 + idx).toString(36).toUpperCase()}`,
+          videoinput: `camera ${(10 + idx).toString(36).toUpperCase()}`
         }[device.kind] || `[${device.kind}]: ${device.groupId} - ${device.deviceId}`;
         this.deviceId2Device[device.deviceId] = device;
       }
@@ -189,12 +189,12 @@ export class WebrtcComponent implements AfterViewInit {
     this.webcam.changes.subscribe(() => {
       const webcamElem = this.webcam.first.nativeElement as HTMLVideoElement;
       webcamElem.srcObject = stream;
-      this.remote.changes.subscribe(() =>
+      /*this.remote.changes.subscribe(() =>
         this.webrtcService.init(
           webcamElem,
           this.remote.first.nativeElement as HTMLVideoElement
         )
-      );
+      );*/
     });
   }
 }

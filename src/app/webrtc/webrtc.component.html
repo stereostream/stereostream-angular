@@ -1,11 +1,11 @@
 <form (ngSubmit)="getStream()">
-  <div *ngIf="stream">
+  <!--<div *ngIf="stream">
     <hr>
     <button md-button (click)="webrtcService.call()">Call</button>
     <button md-button (click)="webrtcService.hangup()">Hang up</button>
     <video autoplay #remote></video>
     <hr>
-  </div>
+  </div>-->
   <div class="containerX" fxLayout="row">
     <div fxFlex="100%">
       <md-select
@@ -13,7 +13,7 @@
         [(ngModel)]="selectedMic"
         name="micSelector">
         <md-option *ngFor="let mic of mics" [value]="mic.deviceId">
-          {{mic.label || mic.deviceId}}
+          {{mic.label || deviceId2Label[mic.deviceId]}}
         </md-option>
       </md-select>
 
@@ -22,7 +22,7 @@
         [(ngModel)]="selectedCam"
         name="camSelector">
         <md-option *ngFor="let cam of cams" [value]="cam.deviceId">
-          {{cam.label || cam.deviceId}}
+          {{cam.label || deviceId2Label[cam.deviceId]}}
         </md-option>
       </md-select>
     </div>
