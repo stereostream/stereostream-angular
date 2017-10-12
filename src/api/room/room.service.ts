@@ -12,6 +12,8 @@ import { IRoom } from './room.interfaces';
 
 @Injectable()
 export class RoomService {
+  rooms: {[name: string]: IRoom} = {};
+
   constructor(private http: HttpClient,
               private alertsService: AlertsService) { }
 
@@ -29,12 +31,24 @@ export class RoomService {
   }
 
   get(name: string): Observable<IRoom> {
-    return this.http
-      .get<IRoom>(`/api/room/${name}`)
-      .map((room: IRoom) =>
-        Object.assign(room, {
-          log: room.log == null || !room.log ? null : room.log.map(log => Object.assign(log, { date: moment(new Date(log.date as any)) }))
-        }));
+    return new Observable(observer => {
+      const fin = () => {
+        observer.next(this.rooms[name]);
+        return observer.complete();
+      };
+
+      if (this.rooms.hasOwnProperty(name)) return fin();
+      this.http
+        .get<IRoom>(`/api/room/${name}`)
+        .map((room: IRoom) =>
+          Object.assign(room, {
+            log: room.log == null || !room.log ? null : room.log.map(log => Object.assign(log, { date: moment(new Date(log.date as any)) }))
+          }))
+        .subscribe((room: IRoom) => {
+          this.rooms[name] = room;
+          return fin();
+        });
+    });
   }
 
   set(name: string): Observable<IRoom> {
