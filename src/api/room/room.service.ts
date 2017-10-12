@@ -42,7 +42,8 @@ export class RoomService {
         .get<IRoom>(`/api/room/${name}`)
         .map((room: IRoom) =>
           Object.assign(room, {
-            log: room.log == null || !room.log ? null : room.log.map(log => Object.assign(log, { date: moment(new Date(log.date as any)) }))
+            log: room.log == null || !room.log
+              ? null : room.log.map(log => Object.assign(log, { date: moment(new Date(log.date as any)) })).reverse()
           }))
         .subscribe((room: IRoom) => {
           this.rooms[name] = room;

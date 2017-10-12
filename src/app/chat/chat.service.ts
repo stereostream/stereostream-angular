@@ -22,7 +22,7 @@ export class ChatService {
     });
     this.io.on('chat message', (msg) => {
       const [date, user, content] = msg.split('\t') as [string, string, string];
-      this.roomService.rooms[room].log.push({ date: moment(new Date(date)), user, content });
+      this.roomService.rooms[room].log.unshift({ date: moment(new Date(date)), user, content });
     });
   }
 

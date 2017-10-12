@@ -8,8 +8,8 @@
   </button>
 </form>
 
-<mat-list class="make-scrollable" #chatLog *ngIf="roomService.rooms[room] && roomService.rooms[room].log">
-  <mat-list-item *ngFor="let msg of roomService.rooms[room].log.reverse()"
+<mat-list class="make-scrollable" *ngIf="roomService.rooms[room] && roomService.rooms[room].log">
+  <mat-list-item *ngFor="let msg of roomService.rooms[room].log"
                 [style.background-color]="msg.user === user ? 'lightsteelblue': 'mediumseagreen'">
     <p matLine>{{msg.content}}</p>
     <p matLine>
