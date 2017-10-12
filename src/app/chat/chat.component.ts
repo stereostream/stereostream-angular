@@ -15,8 +15,8 @@ export class ChatComponent implements OnInit {
   user: string;
 
   constructor(private route: ActivatedRoute,
-              public chatService: ChatService,
-              private roomService: RoomService) {
+              private chatService: ChatService,
+              public roomService: RoomService) {
     this.route.url.subscribe(seg => this.room = seg[1].path);
     this.user = localStorage.getItem('user');
   }
@@ -24,7 +24,7 @@ export class ChatComponent implements OnInit {
   ngOnInit() {
     this.roomService
       .get(this.room)
-      .subscribe(room => this.chatService.received = (room.log || []));
+      .subscribe(() => this.chatService.init(this.room));
   }
 
   sendMessage(): void {

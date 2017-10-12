@@ -3,15 +3,17 @@ import * as io_client from 'socket.io-client';
 import * as moment from 'moment';
 
 import { AuthService } from '../../api/auth/auth.service';
-import { ILogEntry } from '../../api/room/room.interfaces';
+import { RoomService } from '../../api/room/room.service';
 
 @Injectable()
 export class ChatService {
   io: any /*SocketIOClientStatic*/;
-  public received: ILogEntry[] = [];
 
-  constructor() {
+  constructor(private roomService: RoomService) {
     this.io = io_client() as any;
+  }
+
+  init(room: string) {
     this.io.on('connection', socket => {
       console.log('a user connected');
       socket.on('disconnect', () => {
@@ -19,8 +21,8 @@ export class ChatService {
       });
     });
     this.io.on('chat message', (msg) => {
-      const [date, user, content] = msg.split('\t');
-      this.received.push({ date: moment(new Date(date)), user, content } as ILogEntry);
+      const [date, user, content] = msg.split('\t') as [string, string, string];
+      this.roomService.rooms[room].log.push({ date: moment(new Date(date)), user, content });
     });
   }
 
