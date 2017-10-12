@@ -1,12 +1,12 @@
-<h2 class="md-h2">Video files and all folders from the Downloads folder on server</h2>
+<h2 class="mat-h2">Video files and all folders from the Downloads folder on server</h2>
 
-<button *ngIf="current_dir !== '/'" md-button (click)="upDir()">&uarr; ..</button>
+<button *ngIf="current_dir !== '/'" mat-button (click)="upDir()">&uarr; ..</button>
 <ul *ngFor="let f of dirs">
   <li *ngIf="f.type === 'directory'">
-    <button md-button (click)="followDir(f)">{{f.name}}</button>
+    <button mat-button (click)="followDir(f)">{{f.name}}</button>
   </li>
   <li *ngIf="f.type === 'file'">
-    <h3 class="md-h3">{{f.name}} taken {{f.mtime}}</h3>
+    <h3 class="mat-h3">{{f.name}} taken {{f.mtime}}</h3>
     <video [src]="getUrl(f)" controls></video>
   </li>
 </ul>

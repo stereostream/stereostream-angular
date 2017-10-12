@@ -1,19 +1,19 @@
 <form class="example-form" (ngSubmit)="sendMessage()">
-  <md-form-field class="example-full-width">
-    <input mdInput placeholder="Enter text" [(ngModel)]="inputMsg" name="inputM"
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="Enter text" [(ngModel)]="inputMsg" name="inputM"
            onkeydown="event.keyCode === 13 && document.getElementById('sendMessage').click()">
-  </md-form-field>
-  <button md-button [disabled]="!inputMsg.length" id="sendMessage" color="accent" type="submit">
+  </mat-form-field>
+  <button mat-button [disabled]="!inputMsg.length" id="sendMessage" color="accent" type="submit">
     Send
   </button>
 </form>
 
-<md-list class="make-scrollable" #chatLog>
-  <md-list-item *ngFor="let msg of chatService.received.reverse()"
+<mat-list class="make-scrollable" #chatLog>
+  <mat-list-item *ngFor="let msg of chatService.received.reverse()"
                 [style.background-color]="msg.user === user ? 'lightsteelblue': 'mediumseagreen'">
-    <p mdLine>{{msg.content}}</p>
-    <p mdLine>
-      [{{msg.user}}] <em>{{msg.date.fromNow()}}</em>
+    <p matLine>{{msg.content}}</p>
+    <p matLine>
+      &emsp;[{{msg.user}}] <em>{{msg.date.fromNow()}}</em>
     </p>
-  </md-list-item>
-</md-list>
+  </mat-list-item>
+</mat-list>

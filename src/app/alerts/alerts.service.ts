@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MdSnackBar, MdSnackBarConfig } from '@angular/material';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 
 import { TAlert } from './alerts.types';
 
@@ -7,11 +7,11 @@ import { TAlert } from './alerts.types';
 export class AlertsService {
   alerts: string[] = [];
 
-  constructor(private snackBar: MdSnackBar) {
+  constructor(private snackBar: MatSnackBar) {
     // this.alerts = [];
   }
 
-  public add(alert: string | TAlert | Error, action?: string | false, config?: MdSnackBarConfig): void {
+  public add(alert: string | TAlert | Error, action?: string | false, config?: MatSnackBarConfig): void {
     const alert_s = alert && (typeof alert === 'string' ? alert
       : (alert instanceof Error ? alert.message : Object
         .keys(alert)

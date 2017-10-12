@@ -1,60 +1,64 @@
-<form (ngSubmit)="getStream()">
+<form (ngSubmit)="getStream()" fxLayout="row" fxFlexAlign="center">
   <!--<div *ngIf="stream">
     <hr>
-    <button md-button (click)="webrtcService.call()">Call</button>
-    <button md-button (click)="webrtcService.hangup()">Hang up</button>
+    <button mat-button (click)="webrtcService.call()">Call</button>
+    <button mat-button (click)="webrtcService.hangup()">Hang up</button>
     <video autoplay #remote></video>
     <hr>
   </div>-->
-  <div class="containerX" fxLayout="row">
-    <div fxFlex="100%">
-      <md-select
+  <div fxFlex="60%">
+    <mat-form-field>
+      <mat-select
         placeholder="microphone"
         [(ngModel)]="selectedMic"
         name="micSelector">
-        <md-option *ngFor="let mic of mics" [value]="mic.deviceId">
+        <mat-option *ngFor="let mic of mics" [value]="mic.deviceId">
           {{mic.label || deviceId2Label[mic.deviceId]}}
-        </md-option>
-      </md-select>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
-      <md-select
+    <mat-form-field>
+      <mat-select
         placeholder="camera"
         [(ngModel)]="selectedCam"
         name="camSelector">
-        <md-option *ngFor="let cam of cams" [value]="cam.deviceId">
+        <mat-option *ngFor="let cam of cams" [value]="cam.deviceId">
           {{cam.label || deviceId2Label[cam.deviceId]}}
-        </md-option>
-      </md-select>
-    </div>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
 
 
-    <div fxFlex="100%">
-      <button md-raised-button color="primary" type="submit" *ngIf="!recorder || recorder.state === 'inactive'">
-        Use
-      </button>
-      <button md-raised-button id="record" *ngIf="stream && (recorder ? recorder.state !== 'recording' : true)"
-              (click)="startRecord()">
-        <md-icon class="record_voice_over">record_voice_over</md-icon>
-        Record
-      </button>
-      <button md-raised-button id="stopRecording" *ngIf="recorder && recorder.state !== 'inactive'"
-              (click)="stopRecord()">
-        <md-icon class="stop">stop</md-icon>
-        End recording
-      </button>
-      <p *ngIf="recorder" id="state">{{recorder.state}}</p>
-    </div>
+  <div fxFlex="40%">
+    <button mat-raised-button color="primary" type="submit" *ngIf="!recorder || recorder.state === 'inactive'">
+      Use
+    </button>
+    <button mat-raised-button id="record" *ngIf="stream && (recorder ? recorder.state !== 'recording' : true)"
+            (click)="startRecord()">
+      <mat-icon class="record_voice_over">record_voice_over</mat-icon>
+      Record
+    </button>
+    <button mat-raised-button id="stopRecording" *ngIf="recorder && recorder.state !== 'inactive'"
+            (click)="stopRecord()">
+      <mat-icon class="stop">stop</mat-icon>
+      End recording
+    </button>
+    <p *ngIf="recorder" id="state">{{recorder.state}}</p>
   </div>
 </form>
 
-<video muted autoplay *ngIf="stream" #webcam></video>
+<div fxLayout="row" fxFlexAlign="center">
+  <video fxFlex="100%" muted autoplay *ngIf="stream" #webcam></video>
+</div>
 
 <!--
 <div #broadcast></div>
-<button md-button (disabled)="openRtcRoomToggle" (click)="openRtcRoom()">
+<button mat-button (disabled)="openRtcRoomToggle" (click)="openRtcRoom()">
   Open Room
 </button>
-<button md-button (disabled)="joinRtcRoomToggle" (click)="joinRtcRoom()">
+<button mat-button (disabled)="joinRtcRoomToggle" (click)="joinRtcRoom()">
   Join Room
 </button>
 -->

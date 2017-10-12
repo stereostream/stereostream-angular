@@ -1,3 +1,7 @@
 a {
   color: dodgerblue;
 }
+
+mat-list-item a {
+  font-size: x-large;
+}

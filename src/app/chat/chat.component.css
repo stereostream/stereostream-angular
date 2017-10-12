@@ -3,7 +3,7 @@
   display: block;
 }
 
-md-list.make-scrollable {
+mat-list.make-scrollable {
   height: 200px;
   overflow-y: scroll;
 }

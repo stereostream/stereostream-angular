@@ -7,9 +7,7 @@ export interface IRoom {
 }
 
 export interface ILogEntry {
-  date: moment.Moment
-  /* | string */
-  ;
+  date: moment.Moment;
   user: string;
   content: string;
 }

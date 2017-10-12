@@ -1,23 +1,19 @@
-<h1 class="md-h1">{{name}}</h1>
+<h1 class="mat-h1">{{name}}</h1>
 
-<md-card class="card-demo">
-  <md-card-title>Add cameras</md-card-title>
-  <md-card-subtitle>Videos have been scaled 75% on this page</md-card-subtitle>
-  <md-card-content>
-    <div class="containerX" fxLayout="row">
-      <div fxLayout="row" class="coloredContainerX" fxLayoutAlign="space-around center">
-        <div fxFlex="45%">
-          <h2 class="md-h2">Camera 0</h2>
-          <app-webrtc [name]="'camera0'"></app-webrtc>
-        </div>
-        <div fxFlex="45%">
-          <h2 class="md-h2">Camera 1</h2>
-          <app-webrtc [name]="'camera1'"></app-webrtc>
-        </div>
-      </div>
+<mat-card class="card-demo">
+  <mat-card-title>Add cameras</mat-card-title>
+  <mat-card-subtitle>Videos have been scaled 75% on this page</mat-card-subtitle>
+  <mat-card-content fxLayout="row" fxLayoutAlign="space-around center">
+    <div fxFlex="45%">
+      <h2 class="mat-h2">Camera 0</h2>
+      <app-webrtc [name]="'camera0'"></app-webrtc>
     </div>
-  </md-card-content>
-  <md-card-footer>
+    <div fxFlex="45%">
+      <h2 class="mat-h2">Camera 1</h2>
+      <app-webrtc [name]="'camera1'"></app-webrtc>
+    </div>
+  </mat-card-content>
+  <mat-card-footer>
     <ul id="recorded">
       <li *ngFor="let record of webrtcService.recorded">
         <a [href]="sanitize(record.href)" [download]="record.download">
@@ -25,12 +21,12 @@
         </a>
       </li>
     </ul>
-  </md-card-footer>
-</md-card>
+  </mat-card-footer>
+</mat-card>
 
-<md-card class="card-demo">
-  <md-card-title>Chat</md-card-title>
-  <md-card-content>
+<mat-card class="card-demo">
+  <mat-card-title>Chat</mat-card-title>
+  <mat-card-content>
     <app-chat></app-chat>
-  </md-card-content>
-</md-card>
+  </mat-card-content>
+</mat-card>
