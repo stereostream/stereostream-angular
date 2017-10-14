@@ -12,6 +12,7 @@ import { DirectoryService } from './directory.service';
 export class DirectoryComponent implements OnInit {
   dirs: IDir[];
   current_dir = '/';
+  base = `${location.protocol}//${location.hostname}${location.port === '80' ? '' : ':' + location.port}`;
 
   constructor(private dirService: DirectoryService) { }
 
@@ -25,11 +26,11 @@ export class DirectoryComponent implements OnInit {
   }
 
   getUrl(fname: IDir) {
-    return `${location.protocol}//${location.hostname}/Downloads/${fname.name}`;
+    return new URL(`${this.dirService.base_path}/${fname.name}`, this.base);
   }
 
   followDir(fname: {name: string}, skip = false) {
-    if (!skip) this.current_dir += `/${fname.name}`;
+    if (!skip) this.current_dir += `${this.current_dir.endsWith('/') ? '' : '/'}${fname.name}/`;
     this.dirService
       .get(this.current_dir)
       .map(dirs =>
@@ -39,7 +40,7 @@ export class DirectoryComponent implements OnInit {
   }
 
   upDir() {
-    this.current_dir = this.current_dir.slice(0, this.current_dir.lastIndexOf('/'));
+    this.current_dir = this.current_dir.slice(0, this.current_dir.lastIndexOf('/', this.current_dir.lastIndexOf('/') - 1));
     this.followDir({ name: this.current_dir }, true);
   }
 }

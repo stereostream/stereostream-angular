@@ -8,7 +8,7 @@
     "secure": false
   },
   "/Downloads": {
-    "target": "http://localhost/Downloads",
+    "target": "http://localhost",
     "secure": false
   }
 }

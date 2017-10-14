@@ -25,6 +25,4 @@ export class RoomComponent {
   addWebcam() {
     this.webcams.push(`webcam${this.webcams.length}`);
   }
-
-
 }
