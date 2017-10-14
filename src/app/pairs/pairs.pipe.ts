@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'pairs', pure: false
+  name: 'pairs', pure: true
 })
 export class PairsPipe implements PipeTransform {
   transform(value: any[], args?: any): any {

@@ -10,14 +10,12 @@ import { MaterialImportModule } from '../material-import/material-import.module'
 import { WebrtcService } from '../webrtc/webrtc.service';
 import { RoomComponent } from './room.component';
 import { roomRoutes } from './room.routes';
-import { ForNumberModule } from '../fornumber/fornumber.module';
 import { PairsModule } from '../pairs/pairs.module';
 
 @NgModule({
   imports: [
     CommonModule, RouterModule, RouterModule.forChild(roomRoutes),
     FlexLayoutModule,
-    ForNumberModule,
     PairsModule,
     MaterialImportModule,
     WebrtcModule, ChatModule

@@ -1,24 +1,22 @@
 <h1 class="mat-h1">{{name}}</h1>
 
-<button mat-raised-button color="primary" (click)="addWebcam()">+ Add webcam</button>
-
-<!--
-<ng-template *ngIf="webcams" ForNumber [forNumberOf]="webcams" let-index="index">
-  <p>index = {{index}}; webcams = {{webcams}}</p>
-</ng-template>
--->
-<mat-card class="card-demo" *ngIf="webcams">
-  <mat-card-title>Add cameras</mat-card-title>
-  <mat-card-subtitle>Videos have been scaled 75% on this page</mat-card-subtitle>
-  <mat-card-content>
-    <div fxLayout="row" fxLayoutAlign="space-around center" *ngFor="let webcam of webcams | pairs; index as idx">
+<mat-card *ngIf="webcams">
+  <mat-card-title>
+    <button mat-raised-button color="primary" (click)="addWebcam()">
+      + Add webcam
+    </button>
+  </mat-card-title>
+  <mat-card-subtitle *ngIf="webcams.length">Videos have been scaled 75% on this page</mat-card-subtitle>
+  <mat-card-content *ngIf="webcams.length">
+    <div fxLayout="row" fxLayoutAlign="space-around center"
+         *ngFor="let webcam of webcams | pairs:webcams.length; index as idx">
       <div fxFlex="45%">
         <h2 class="mat-h2">{{webcam[0]}}</h2>
-        <app-webrtc [name]="'hello'"></app-webrtc>
+        <app-webrtc [name]="webcam[0]"></app-webrtc>
       </div>
-      <div fxFlex="45%" *ngIf="webcam[1]">
+      <div fxFlex="45%" *ngIf="webcam.length > 1 && webcam[1]">
         <h2 class="mat-h2">{{webcam[1]}}</h2>
-        <!--<app-webrtc [name]=idx></app-webrtc>-->
+        <app-webrtc [name]="webcam[1]"></app-webrtc>
       </div>
     </div>
   </mat-card-content>
@@ -33,7 +31,7 @@
   </mat-card-footer>
 </mat-card>
 
-<mat-card class="card-demo">
+<mat-card>
   <mat-card-title>Chat</mat-card-title>
   <mat-card-content>
     <app-chat></app-chat>
