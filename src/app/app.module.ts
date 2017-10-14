@@ -21,13 +21,16 @@ import { RoomModule } from './room/room.module';
 import { DirectoryModule } from './directory/directory.module';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+  ],
   imports: [
     BrowserModule, BrowserAnimationsModule, HttpClientModule,
     RouterModule, RouterModule.forRoot(appRoutes),
 
     FlexLayoutModule, ObserversModule, PlatformModule,
 
+    // RepeatModule,
     MaterialImportModule,
     NavbarModule,
     FooterModule,

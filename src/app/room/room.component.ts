@@ -12,6 +12,7 @@ import { WebrtcService } from '../webrtc/webrtc.service';
 export class RoomComponent {
   name: string;
   sanitize = this.sanitizer.bypassSecurityTrustUrl;
+  webcams: string[] = [];
 
   constructor(private route: ActivatedRoute,
               private sanitizer: DomSanitizer,
@@ -20,4 +21,10 @@ export class RoomComponent {
       seg => this.name = seg[1].path
     );
   }
+
+  addWebcam() {
+    this.webcams.push(`webcam${this.webcams.length}`);
+  }
+
+
 }
