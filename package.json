@@ -1,6 +1,6 @@
 {
   "name": "stereostream-angular",
-  "version": "0.0.23",
+  "version": "0.0.24",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -32,6 +32,7 @@
     "rxjs": "^5.4.3",
     "simple-peer": "^8.1.1",
     "socket.io-client": "^2.0.3",
+    "webrtc-adapter": "^5.0.6",
     "zone.js": "^0.8.18"
   },
   "devDependencies": {

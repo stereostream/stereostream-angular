@@ -1,8 +1,9 @@
-import { AfterViewInit, Component, ElementRef, Input, QueryList, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { AlertsService } from '../alerts/alerts.service';
 import { WebrtcService } from './webrtc.service';
+import { Webrtc } from './webrtc';
 
 // import * as Peer from 'simple-peer';
 // import 'rtcmulticonnection-v3/dist/RTCMultiConnection';
@@ -11,8 +12,14 @@ declare const MediaRecorder: any;
 
 interface IRTCMultiConnection {
   socketURL: string;
-  session: {audio: boolean, video: boolean};
-  sdpConstraints: {mandatory: {OfferToReceiveAudio: boolean, OfferToReceiveVideo: boolean}};
+  session: {
+    audio: boolean, video: boolean
+  };
+  sdpConstraints: {
+    mandatory: {
+      OfferToReceiveAudio: boolean, OfferToReceiveVideo: boolean
+    }
+  };
   onstream: (event: Event) => void;
   open: (roomid: string) => void;
   join: (roomid: string) => void;
@@ -26,8 +33,8 @@ interface IRTCMultiConnection {
 export class WebrtcComponent implements AfterViewInit {
   @Input() name: string;
   @ViewChildren('webcam') webcam: QueryList<ElementRef>;
-  /*@ViewChild('broadcast') broadcast: HTMLDivElement;
-  @ViewChildren('remote') remote: QueryList<ElementRef>;*/
+  @ViewChild('broadcast') broadcast: HTMLDivElement;
+  @ViewChildren('remote') remote: QueryList<ElementRef>;
 
   stream: HTMLVideoElement['srcObject'];
 
@@ -39,6 +46,8 @@ export class WebrtcComponent implements AfterViewInit {
   deviceId2Label: {[index: string]: string} = {};
   deviceId2Device: {[index: string]: MediaDeviceInfo} = {};
   recorder: any /* MediaRecorder */;
+
+  webrtc: Webrtc;
 
   room: string;
 
@@ -179,7 +188,8 @@ export class WebrtcComponent implements AfterViewInit {
   stopRecord() {
     this.alertsService.add(
       'Preparing video to download',
-      false, { duration: 2500 }
+      false,
+      { duration: 2500 }
     );
     this.recorder.stop();
   }
@@ -189,12 +199,10 @@ export class WebrtcComponent implements AfterViewInit {
     this.webcam.changes.subscribe(() => {
       const webcamElem = this.webcam.first.nativeElement as HTMLVideoElement;
       webcamElem.srcObject = stream;
-      /*this.remote.changes.subscribe(() =>
-        this.webrtcService.init(
-          webcamElem,
-          this.remote.first.nativeElement as HTMLVideoElement
-        )
-      );*/
+      this.remote.changes.subscribe(() => {
+        if (typeof this.remote.first !== 'undefined')
+          this.webrtc = new Webrtc(webcamElem, this.remote.first.nativeElement as HTMLVideoElement);
+      });
     });
   }
 }

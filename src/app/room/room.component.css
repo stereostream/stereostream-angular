@@ -10,7 +10,17 @@ div.coloredContainerX > div, div.colorNested > div > div {
   text-align: center;
 }
 
-#recorded {
+.recorded {
   background-color: #ff5722;
   display: block;
+}
+
+.exit-button {
+  padding: .5em 1em;
+  color: firebrick;
+  border: 1px solid #999;
+  border: transparent;
+  background-color: transparent;
+  text-decoration: none;
+  border-radius: 2px;
 }

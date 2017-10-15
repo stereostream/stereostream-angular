@@ -1,17 +1,7 @@
 <form (ngSubmit)="getStream()" fxLayout="row" fxFlexAlign="center">
-  <!--<div *ngIf="stream">
-    <hr>
-    <button mat-button (click)="webrtcService.call()">Call</button>
-    <button mat-button (click)="webrtcService.hangup()">Hang up</button>
-    <video autoplay #remote></video>
-    <hr>
-  </div>-->
   <div fxFlex="60%">
     <mat-form-field>
-      <mat-select
-        placeholder="microphone"
-        [(ngModel)]="selectedMic"
-        name="micSelector">
+      <mat-select placeholder="microphone" [(ngModel)]="selectedMic" name="micSelector">
         <mat-option *ngFor="let mic of mics" [value]="mic.deviceId">
           {{mic.label || deviceId2Label[mic.deviceId]}}
         </mat-option>
@@ -19,10 +9,7 @@
     </mat-form-field>
 
     <mat-form-field>
-      <mat-select
-        placeholder="camera"
-        [(ngModel)]="selectedCam"
-        name="camSelector">
+      <mat-select placeholder="camera" [(ngModel)]="selectedCam" name="camSelector">
         <mat-option *ngFor="let cam of cams" [value]="cam.deviceId">
           {{cam.label || deviceId2Label[cam.deviceId]}}
         </mat-option>
@@ -31,26 +18,37 @@
   </div>
 
 
-  <div fxFlex="40%">
+  <div fxFlex="40%" *ngIf="selectedMic && selectedCam">
     <button mat-raised-button color="primary" type="submit" *ngIf="!recorder || recorder.state === 'inactive'">
-      Use
+      <mat-icon class="perm_camera_mic" aria-label="Select">perm_camera_mic</mat-icon>
+      Select&#x2006;&nbsp;
     </button>
     <button mat-raised-button id="record" *ngIf="stream && (recorder ? recorder.state !== 'recording' : true)"
             (click)="startRecord()">
-      <mat-icon class="record_voice_over">record_voice_over</mat-icon>
+      <mat-icon class="fiber_smart_record" aria-label="Record">fiber_smart_record</mat-icon>
       Record
     </button>
     <button mat-raised-button id="stopRecording" *ngIf="recorder && recorder.state !== 'inactive'"
             (click)="stopRecord()">
-      <mat-icon class="stop">stop</mat-icon>
+      <mat-icon class="stop" aria-label="End recording">stop</mat-icon>
       End recording
     </button>
     <p *ngIf="recorder" id="state">{{recorder.state}}</p>
   </div>
 </form>
 
-<div fxLayout="row" fxFlexAlign="center">
-  <video fxFlex="100%" muted autoplay *ngIf="stream" #webcam></video>
+<div fxLayout="row" fxFlexAlign="center" *ngIf="stream">
+  <video fxFlex="100%" muted autoplay #webcam></video>
+</div>
+
+<div fxLayout="row" fxFlexAlign="center" *ngIf="stream && webrtc">
+  <button mat-button (click)="webrtc.call()" class="mat-h1" *ngIf="!webrtc.callStarted()">
+    <mat-icon aria-label="Call">video_call</mat-icon>
+  </button>
+  <button mat-button (click)="webrtc.hangup()" *ngIf="webrtc.callStarted()">
+    <mat-icon aria-label="Hang up">call_end</mat-icon>
+  </button>
+  <video autoplay #remote></video>
 </div>
 
 <!--
@@ -68,7 +66,6 @@
 <textarea id="yourId"></textarea>
 <label for="otherId">OtherID</label>
 <textarea id="otherId"></textarea>
-
 
 <form (ngSubmit)="sub($event)">
   <label for="incoming">Incoming</label>

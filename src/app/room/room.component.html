@@ -10,19 +10,23 @@
   <mat-card-subtitle *ngIf="webcams.length">Videos have been scaled 75% on this page</mat-card-subtitle>
   <mat-card-content *ngIf="webcams.length">
     <div fxLayout="row" fxLayoutAlign="space-around center"
-         *ngFor="let webcam of webcams | pairs:webcams.length; index as idx">
+         *ngFor="let webcam of webcams | pairs:webcams.length; index as idx; last as isLast">
       <div fxFlex="45%">
-        <h2 class="mat-h2">{{webcam[0]}}</h2>
+        <h2 class="mat-h2">{{webcam[0]}}
+          <button class="exit-button" (click)="delWebcam(webcam[0])">&times;</button>
+        </h2>
         <app-webrtc [name]="webcam[0]"></app-webrtc>
       </div>
       <div fxFlex="45%" *ngIf="webcam.length > 1 && webcam[1]">
-        <h2 class="mat-h2">{{webcam[1]}}</h2>
+        <h2 class="mat-h2">{{webcam[1]}}
+          <button class="exit-button" (click)="delWebcam(webcam[1])">&times;</button>
+        </h2>
         <app-webrtc [name]="webcam[1]"></app-webrtc>
       </div>
     </div>
   </mat-card-content>
-  <mat-card-footer>
-    <ul id="recorded">
+  <mat-card-footer *ngIf="webrtcService.recorded.length">
+    <ul class="recorded">
       <li *ngFor="let record of webrtcService.recorded">
         <a [href]="sanitize(record.href)" [download]="record.download">
           {{record.download}}

@@ -25,4 +25,9 @@ export class RoomComponent {
   addWebcam() {
     this.webcams.push(`webcam${this.webcams.length}`);
   }
+
+  delWebcam(name: string) {
+    const ex = this.webcams.lastIndexOf(name);
+    if (ex > -1) this.webcams.splice(ex, 1);
+  }
 }
