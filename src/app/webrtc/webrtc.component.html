@@ -41,13 +41,15 @@
   <video fxFlex="100%" muted autoplay #webcam></video>
 </div>
 
-<div fxLayout="row" fxFlexAlign="center" *ngIf="stream && webrtc">
-  <button mat-button (click)="webrtc.call()" class="mat-h1" *ngIf="!webrtc.callStarted()">
-    <mat-icon aria-label="Call">video_call</mat-icon>
-  </button>
-  <button mat-button (click)="webrtc.hangup()" *ngIf="webrtc.callStarted()">
-    <mat-icon aria-label="Hang up">call_end</mat-icon>
-  </button>
+<div fxLayout="row" fxFlexAlign="center" *ngIf="stream">
+  <div *ngIf="webrtc">
+    <button mat-button (click)="webrtc.call()" class="mat-h1" *ngIf="!webrtc.pc1">
+      <mat-icon aria-label="Call">video_call</mat-icon>
+    </button>
+    <button mat-button (click)="webrtc.hangup()" *ngIf="!!webrtc.pc1">
+      <mat-icon aria-label="Hang up">call_end</mat-icon>
+    </button>
+  </div>
   <video autoplay #remote></video>
 </div>
 

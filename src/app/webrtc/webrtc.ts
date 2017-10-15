@@ -1,7 +1,8 @@
 export class Webrtc {
   private startTime: number;
   private localStream: MediaStream;
-  private pc1: RTCPeerConnection;
+  /* so we know it's active [publicly]: */
+  pc1: RTCPeerConnection;
   private pc2: RTCPeerConnection;
   private offerOptions: RTCOfferOptions = {
     offerToReceiveAudio: 1,
@@ -45,10 +46,6 @@ export class Webrtc {
     };
   }
 
-  callStarted(): boolean {
-    return this.pc1 != null;
-  }
-
   public call() {
     /*callButton.disabled = true;
     hangupButton.disabled = false;*/
@@ -87,6 +84,8 @@ export class Webrtc {
 
   public hangup() {
     this.trace('Ending call');
+    console.info('hangup::this =', this, ';');
+    /* tslint:disable:no-unused-expression */
     this.pc1.close();
     this.pc2.close();
     this.pc1 = null;

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { AlertsService } from '../alerts/alerts.service';
@@ -62,6 +62,7 @@ export class WebrtcComponent implements AfterViewInit {
   */
 
   constructor(private route: ActivatedRoute,
+              private cd: ChangeDetectorRef,
               private alertsService: AlertsService,
               public webrtcService: WebrtcService/*,
               private chatService: ChatService,
@@ -200,8 +201,10 @@ export class WebrtcComponent implements AfterViewInit {
       const webcamElem = this.webcam.first.nativeElement as HTMLVideoElement;
       webcamElem.srcObject = stream;
       this.remote.changes.subscribe(() => {
-        if (typeof this.remote.first !== 'undefined')
+        if (typeof this.remote.first !== 'undefined' && !this.webrtc) {
           this.webrtc = new Webrtc(webcamElem, this.remote.first.nativeElement as HTMLVideoElement);
+          this.cd.detectChanges();
+        }
       });
     });
   }
