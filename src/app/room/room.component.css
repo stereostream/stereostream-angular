@@ -118,10 +118,12 @@ div.colored > div:nth-child(7), .seven, .box6 {
 
 .box2, .box9 {
   background-color: #3949ab;
+  color: whitesmoke;
 }
 
 .box3, .box10 {
   background-color: #9c27b0;
+  color: whitesmoke;
 }
 
 .box4, .box11 {
