@@ -1,7 +1,9 @@
 stereostream-angular
 ====================
 
-StereoStream web frontend (Angular 4 and @angular/material).
+StereoStream web frontend (Angular 5; `@angular/material` and `@angular/flex-layout`).
+
+Uses WebSockets (socket.io) and WebRTC.
 
 ## Update version
 

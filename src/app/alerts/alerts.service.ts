@@ -6,8 +6,9 @@ import { TAlert } from './alerts.types';
 @Injectable()
 export class AlertsService {
   alerts: string[] = [];
+  dismiss: MatSnackBar['dismiss'] = this.snackBar.dismiss;
 
-  constructor(private snackBar: MatSnackBar) {
+  constructor(public snackBar: MatSnackBar) {
     // this.alerts = [];
   }
 
@@ -21,9 +22,7 @@ export class AlertsService {
     this.alerts.push(alert_s);
     // console.warn('AlertsService::alerts =', this.alerts, ';');
     this.snackBar.open(
-      alert_s,
-      !action && typeof action !== 'boolean' ? 'Close' : action as string,
-      config
+      alert_s, !action && typeof action !== 'boolean' ? 'Close' : action as string, config
     );
   }
 }

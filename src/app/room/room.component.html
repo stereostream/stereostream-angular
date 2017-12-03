@@ -9,22 +9,19 @@
   </mat-card-title>
   <mat-card-subtitle *ngIf="webcams.length">Videos have been scaled 75% on this page</mat-card-subtitle>
   <mat-card-content *ngIf="webcams.length">
-    <div fxLayout="row" fxLayoutAlign="space-around center"
-         *ngFor="let webcam of webcams | pairs:webcams.length; index as idx; last as isLast">
-      <div fxFlex="45%">
-        <h2 class="mat-h2">{{webcam[0]}}
-          <button class="exit-button" (click)="delWebcam(webcam[0])">&times;</button>
-        </h2>
-        <app-webrtc [name]="webcam[0]"></app-webrtc>
-      </div>
-      <div fxFlex="45%" *ngIf="webcam.length > 1 && webcam[1]">
-        <h2 class="mat-h2">{{webcam[1]}}
-          <button class="exit-button" (click)="delWebcam(webcam[1])">&times;</button>
-        </h2>
-        <app-webrtc [name]="webcam[1]"></app-webrtc>
+    <div fxLayout="row" fxLayoutAlign="space-around center" class="containerX">
+      <div fxLayout="row wrap" class="dynColors box nopad">
+        <div *ngFor="let webcam of webcams; index as idx" fxFlex="45%" class="box{{(idx%14)+1}}">
+          <h2 class="mat-h2">{{webcam}}
+            <button class="exit-button" (click)="delWebcam(webcam)">&times;</button>
+          </h2>
+          <app-webrtc [name]="webcam"></app-webrtc>
+        </div>
       </div>
     </div>
   </mat-card-content>
+
+
   <mat-card-footer *ngIf="webrtcService.recorded.length">
     <ul class="recorded">
       <li *ngFor="let record of webrtcService.recorded">

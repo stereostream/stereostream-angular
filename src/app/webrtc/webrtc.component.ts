@@ -176,6 +176,20 @@ export class WebrtcComponent implements AfterViewInit {
       .catch(this.alertsService.add.bind(this.alertsService));
   }
 
+  gotStream(stream: HTMLVideoElement['srcObject']) {
+    this.stream = stream;
+    this.webcam.changes.subscribe(() => {
+      const webcamElem = this.webcam.first.nativeElement as HTMLVideoElement;
+      webcamElem.srcObject = stream;
+      this.remote.changes.subscribe(() => {
+        if (typeof this.remote.first !== 'undefined' && !this.webrtc) {
+          this.webrtc = new Webrtc(webcamElem, this.remote.first.nativeElement as HTMLVideoElement);
+          this.cd.detectChanges();
+        }
+      });
+    });
+  }
+
   startRecord() {
     this.recorder = new MediaRecorder(this.stream);
     this.recorder.start();
@@ -193,19 +207,5 @@ export class WebrtcComponent implements AfterViewInit {
       { duration: 2500 }
     );
     this.recorder.stop();
-  }
-
-  gotStream(stream: HTMLVideoElement['srcObject']) {
-    this.stream = stream;
-    this.webcam.changes.subscribe(() => {
-      const webcamElem = this.webcam.first.nativeElement as HTMLVideoElement;
-      webcamElem.srcObject = stream;
-      this.remote.changes.subscribe(() => {
-        if (typeof this.remote.first !== 'undefined' && !this.webrtc) {
-          this.webrtc = new Webrtc(webcamElem, this.remote.first.nativeElement as HTMLVideoElement);
-          this.cd.detectChanges();
-        }
-      });
-    });
   }
 }

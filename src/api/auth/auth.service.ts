@@ -13,6 +13,7 @@ import { AlertsService } from '../../app/alerts/alerts.service';
 @Injectable()
 export class AuthService {
   public access_token: string;
+  public loggedIn = AuthService.loggedIn;
 
   constructor(private http: HttpClient,
               private router: Router,
@@ -33,7 +34,7 @@ export class AuthService {
     localStorage.removeItem('access-token');
     localStorage.removeItem('user');
     this.router
-      .navigate(['/'], { queryParams: { redirectUrl: this.router.url } });
+      .navigate(['/'], this.router.url === '/auth/logout' ? {} : { queryParams: { redirectUrl: this.router.url } });
   }
 
   _login(login_resp: ILoginResp) {
@@ -41,9 +42,10 @@ export class AuthService {
     localStorage.setItem('access-token', this.access_token);
   }
 
-  public login(user: IAuthReq): Observable<IAuthReq> {
+  public login(user: IAuthReq): Observable<ILoginResp> | /*ObservableInput<{}> |*/ void {
     localStorage.setItem('user', user.email);
-    return this.http.post<IAuthReq>('/api/auth', user);
+    return this.http
+      .post<ILoginResp>('/api/auth', user);
   }
 
   public register(user: IAuthReq): Observable<HttpResponse<IAuthReq>> {
@@ -52,14 +54,12 @@ export class AuthService {
   }
 
   public signinup(user: IAuthReq): Observable<IAuthReq | ILoginResp> {
-    const error = 'Password invalid';
-    return this
-      .login(user)
+    return (this.login(user) as Observable<ILoginResp>)
       .catch((err: HttpErrorResponse) =>
-        err && err.error && err.error.indexOf(error) > -1 ?
-          this.alertsService.add(error) || Observable.throw(error) :
+        err && err.error && err.error.message && err.error.message === 'User not found' ?
           this.register(user)
             .map(o => Object.assign(o.body, { access_token: o.headers.get('X-Access-Token') }))
+          : this.alertsService.add(err.error.message) || Observable.throw(err.error)
       );
   }
 }

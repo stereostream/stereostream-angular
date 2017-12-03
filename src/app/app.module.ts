@@ -19,6 +19,7 @@ import { AuthInterceptor } from './auth/auth.interceptors';
 import { RoomsModule } from './rooms/rooms.module';
 import { RoomModule } from './room/room.module';
 import { DirectoryModule } from './directory/directory.module';
+import { AuthModule } from './auth/auth.module';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { DirectoryModule } from './directory/directory.module';
 
     // RepeatModule,
     MaterialImportModule,
+    AuthModule,
     NavbarModule,
     FooterModule,
     DirectoryModule,
