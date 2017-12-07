@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -9,7 +9,7 @@ import { WebrtcService } from '../webrtc/webrtc.service';
   templateUrl: './room.component.html',
   styleUrls: ['./room.component.css']
 })
-export class RoomComponent {
+export class RoomComponent implements AfterViewInit {
   name: string;
   sanitize = this.sanitizer.bypassSecurityTrustUrl;
   webcams: string[] = [];
@@ -20,6 +20,10 @@ export class RoomComponent {
     this.route.url.subscribe(
       seg => this.name = seg[1].path
     );
+  }
+
+  ngAfterViewInit() {
+
   }
 
   addWebcam() {

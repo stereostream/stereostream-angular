@@ -11,6 +11,7 @@ import { WebrtcService } from '../webrtc/webrtc.service';
 import { RoomComponent } from './room.component';
 import { roomRoutes } from './room.routes';
 import { PairsModule } from '../pairs/pairs.module';
+import { VideoModule } from '../video/video.module';
 
 @NgModule({
   imports: [
@@ -18,7 +19,7 @@ import { PairsModule } from '../pairs/pairs.module';
     FlexLayoutModule,
     PairsModule,
     MaterialImportModule,
-    WebrtcModule, ChatModule
+    WebrtcModule, ChatModule, VideoModule
   ],
   providers: [RoomService, WebrtcService],
   declarations: [RoomComponent]

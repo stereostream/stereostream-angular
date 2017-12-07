@@ -10,7 +10,7 @@
   <mat-card-subtitle *ngIf="webcams.length">Videos have been scaled 75% on this page</mat-card-subtitle>
   <mat-card-content *ngIf="webcams.length">
     <div fxLayout="row wrap" fxLayoutAlign="space-around center" class="containerX">
-      <div *ngFor="let webcam of webcams; index as idx" fxFlex="45%" class="box{{(idx%14)+1}}">
+      <div *ngFor="let webcam of webcams; index as idx" [id]="'box'+idx" fxFlex="45%" class="box{{(idx%14)+1}}">
         <h2 class="mat-h2">{{webcam}}
           <button class="exit-button" (click)="delWebcam(webcam)">&times;</button>
         </h2>
@@ -29,6 +29,14 @@
     </ul>
   </mat-card-footer>
 </mat-card>
+
+<mat-card>
+  <mat-card-title>Stream</mat-card-title>
+  <mat-card-content>
+    <app-video [src]="'stream0.m3u8'"></app-video>
+  </mat-card-content>
+</mat-card>
+
 
 <mat-card>
   <mat-card-title>Chat</mat-card-title>
