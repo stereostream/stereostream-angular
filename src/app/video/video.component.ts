@@ -1,6 +1,4 @@
 import { AfterViewInit, Component, ElementRef, Input, NgZone, OnInit } from '@angular/core';
-import * as Hls from 'hls.js';
-import * as videojs from 'video.js';
 
 import { ServerStatusService } from '../../api/server-status/server-status.service';
 
@@ -18,13 +16,20 @@ export class VideoComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.serverStatus.get().subscribe(_serverStatus => {
+    /*this.serverStatus.get().subscribe(_serverStatus => {
         if (!this.src.startsWith('http'))
           if (typeof _serverStatus.private_ip !== 'undefined' && location.hostname !== 'localhost')
             this.src = `${location.protocol}//${_serverStatus.private_ip}/api/stream/${this.src}`;
           else if (location.hostname === 'localhost')
             this.src = `${location.protocol}//${location.host}/api/stream/${this.src}`;
-        const video = this.elementRef.nativeElement.querySelector('player')
+
+      }
+    );*/
+  }
+}
+
+/*
+          const video = this.elementRef.nativeElement.querySelector('player')
           || document.getElementById('player') as HTMLVideoElement;
 
         const player = videojs('example-video');
@@ -40,7 +45,4 @@ export class VideoComponent implements OnInit, AfterViewInit {
             video.play();
           });
         }
-      }
-    );
-  }
-}
+        */

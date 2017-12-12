@@ -7,6 +7,7 @@ import {
   MatCardModule,
   MatCheckboxModule,
   MatDialogModule,
+  MATERIAL_SANITY_CHECKS,
   MatFormFieldModule,
   MatGridListModule,
   MatIconModule,
@@ -61,7 +62,8 @@ import {
     MatSidenavModule,
     MatSnackBarModule,
     MatToolbarModule
-  ]
+  ],
+  providers: [{ provide: MATERIAL_SANITY_CHECKS, useValue: false }]
 })
 export class MaterialImportModule {
 }

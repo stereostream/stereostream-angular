@@ -1,4 +1,6 @@
 src = {{src | json }}
 
-<video [src]="src" autoplay>
+<video width="320" height="240" autoplay>
+  <source [src]="src" type="video/webm">
+  Your browser does not support the video tag.
 </video>

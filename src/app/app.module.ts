@@ -20,6 +20,7 @@ import { RoomsModule } from './rooms/rooms.module';
 import { RoomModule } from './room/room.module';
 import { DirectoryModule } from './directory/directory.module';
 import { AuthModule } from './auth/auth.module';
+import { AdvertModule } from './advert/advert.module';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { AuthModule } from './auth/auth.module';
     AuthModule,
     NavbarModule,
     FooterModule,
+    AdvertModule,
     DirectoryModule,
     RoomsModule,
     RoomModule

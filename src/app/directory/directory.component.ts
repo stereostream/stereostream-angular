@@ -4,6 +4,8 @@ import 'rxjs/add/operator/map';
 
 import { DirectoryService } from './directory.service';
 
+const filt = dir => dir.type === 'directory' || dir.name.endsWith('webm');
+
 @Component({
   selector: 'app-directory',
   templateUrl: './directory.component.html',
@@ -19,9 +21,7 @@ export class DirectoryComponent implements OnInit {
   ngOnInit() {
     this.dirService
       .get(this.current_dir)
-      .map(dirs =>
-        dirs.filter(dir => dir.type === 'directory' || dir.name.endsWith('webm'))
-      )
+      .map(dirs => dirs.filter(filt))
       .subscribe(dirs => this.dirs = dirs);
   }
 
@@ -33,9 +33,7 @@ export class DirectoryComponent implements OnInit {
     if (!skip) this.current_dir += `${this.current_dir.endsWith('/') ? '' : '/'}${fname.name}/`;
     this.dirService
       .get(this.current_dir)
-      .map(dirs =>
-        dirs.filter(dir => dir.type === 'directory' || dir.name.endsWith('webm'))
-      )
+      .map(dirs => dirs.filter(filt))
       .subscribe(dirs => this.dirs = dirs);
   }
 

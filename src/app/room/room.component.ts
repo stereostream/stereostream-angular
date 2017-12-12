@@ -13,6 +13,8 @@ export class RoomComponent implements AfterViewInit {
   name: string;
   sanitize = this.sanitizer.bypassSecurityTrustUrl;
   webcams: string[] = [];
+  stream0 = false;
+  stream1 = false;
 
   constructor(private route: ActivatedRoute,
               private sanitizer: DomSanitizer,
