@@ -16,15 +16,18 @@ export class VideoComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    /*this.serverStatus.get().subscribe(_serverStatus => {
-        if (!this.src.startsWith('http'))
+    this.serverStatus.get().subscribe(_serverStatus => {
+      if (this.src.startsWith('http'))
+        this.src.replace('IP_ADDR', _serverStatus.private_ip);
+      else {
           if (typeof _serverStatus.private_ip !== 'undefined' && location.hostname !== 'localhost')
             this.src = `${location.protocol}//${_serverStatus.private_ip}/api/stream/${this.src}`;
           else if (location.hostname === 'localhost')
             this.src = `${location.protocol}//${location.host}/api/stream/${this.src}`;
+      }
 
       }
-    );*/
+    );
   }
 }
 

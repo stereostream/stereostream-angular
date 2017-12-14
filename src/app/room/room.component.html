@@ -37,12 +37,12 @@
       <div fxFlex="45%">
         <h2 class="mat-h2">stream0</h2>
         <button mat-button (click)="stream0 = true" *ngIf="!stream0">Show</button>
-        <app-video *ngIf="stream0" [src]="'http://100.97.187.212:8085/stream0.webm'"></app-video>
+        <app-video *ngIf="stream0" [src]="'http://IP_ADDR:8085/stream0.webm'"></app-video>
       </div>
       <div fxFlex="45%">
         <h2 class="mat-h2">stream1</h2>
         <button mat-button (click)="stream1 = true" *ngIf="!stream1">Show</button>
-        <app-video *ngIf="stream1" [src]="'http://100.97.187.212:8086/stream1.webm'"></app-video>
+        <app-video *ngIf="stream1" [src]="'http://IP_ADDR:8086/stream1.webm'"></app-video>
       </div>
     </div>
   </mat-card-content>
