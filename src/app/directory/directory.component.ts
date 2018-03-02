@@ -26,7 +26,7 @@ export class DirectoryComponent implements OnInit {
   }
 
   getUrl(fname: IDir) {
-    return new URL(`${this.dirService.base_path}/${fname.name}`, this.base);
+    return new URL(`${this.dirService.base_path}${this.current_dir}${fname.name}`, this.base);
   }
 
   followDir(fname: {name: string}, skip = false) {
