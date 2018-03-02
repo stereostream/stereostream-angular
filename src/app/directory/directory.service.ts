@@ -19,7 +19,11 @@ export class DirectoryService {
         new RequestOptions({ headers: this.headers })
       )
       .map(dirs => dirs.json()
-        .map(dir => Object.assign(dir, { date: moment(dir.mtime as any as string).toDate() }))
+        .map((dir: IDir) => Object.assign(dir, {
+          date: dir.name.startsWith('151') ?
+            new Date(parseFloat(dir.name.slice(0, dir.name.indexOf('.', dir.name.indexOf('.') + 1))) * 1000)
+            : moment(dir.mtime as any as string).toDate()
+        }))
         .sort((a, b) => moment.utc(a.mtime).diff(moment.utc(b.mtime)))
       );
   }

@@ -9,5 +9,6 @@
     <h3 class="mat-h3">{{f.name}} taken {{f.mtime}}</h3>
     <video *ngIf="isVideo(f.name)" [src]="getUrl(f)" controls></video>
     <img *ngIf="isImage(f.name)" [alt]="f.name" [src]="getUrl(f)" />
+    <a style="color: #5ca6b0" [href]="getUrl(f)" target="_blank" *ngIf="!isVideo(f.name) && !isImage(f.name)">{{f.name}}</a>
   </li>
 </ul>
