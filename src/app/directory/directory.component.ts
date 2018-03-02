@@ -41,4 +41,12 @@ export class DirectoryComponent implements OnInit {
     this.current_dir = this.current_dir.slice(0, this.current_dir.lastIndexOf('/', this.current_dir.lastIndexOf('/') - 1));
     this.followDir({ name: this.current_dir }, true);
   }
+
+  isVideo(fname: string) {
+    return ['webm', '.mp4', '.avi', '.mkv', '.mov'].indexOf(fname.slice(-4).toLowerCase()) > -1;
+  }
+
+  isImage(fname: string) {
+    return ['.jpg', 'jpeg', '.png', '.gif'].indexOf(fname.slice(-4).toLowerCase()) > -1;
+  }
 }

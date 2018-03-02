@@ -7,6 +7,7 @@
   </li>
   <li *ngIf="f.type === 'file'">
     <h3 class="mat-h3">{{f.name}} taken {{f.mtime}}</h3>
-    <video [src]="getUrl(f)" controls></video>
+    <video *ngIf="isVideo(f.name)" [src]="getUrl(f)" controls></video>
+    <img *ngIf="isImage(f.name)" [alt]="f.name" [src]="getUrl(f)" />
   </li>
 </ul>
