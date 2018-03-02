@@ -4,7 +4,7 @@ import 'rxjs/add/operator/map';
 
 import { DirectoryService } from './directory.service';
 
-const filt = dir => dir.type === 'directory' || dir.name.endsWith('webm');
+const filt = dir => dir.type === 'directory' || dir.name.endsWith('webm') || true;
 
 @Component({
   selector: 'app-directory',
